@@ -1,0 +1,17 @@
+{% extends 'base.djt' %}
+
+{% block title_bar %}: Delete {{ object.title }}{% endblock %}
+{% block home_active %}{% endblock %}
+
+{% block content %}
+<div class="span8 offset2">
+	<form action="{{ request.path }}" method="POST">
+		<h1>Are you sure you want to delete {{ object.title }}</h1>
+		{% csrf_token %}
+		<div class="form-actions">
+			<input type="submit" class="btn btn-danger" value="Yes"/>
+			<a href="/" class="btn">No</a>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -9,6 +9,10 @@ urlpatterns = patterns('',
     # url(r'^$', 'storieshouse.views.home', name='home'),
     url(r'^', include('house.urls')),
 
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'admin/login.html'}),
+    url(r'^logout/$', 'django.contrib.auth.views.logout'),
+    url(r'^change_password/$', 'django.contrib.auth.views.password_change', {'post_change_redirect': '/account/'}),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

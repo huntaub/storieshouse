@@ -1,0 +1,17 @@
+{% extends 'base.djt' %}
+
+{% block title_bar %}: Write{% endblock %}
+{% block home_active %}{% endblock %}
+{% block write_active %}class="active"{% endblock %}
+
+{% block content %}
+<div class="span8 offset2">
+<form action="{{ request.path }}" method="POST">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<div class="form-actions">
+		<input type="submit" value="Save" class="btn btn-primary"/>
+	</div>
+</form>
+</div>
+{% endblock %}

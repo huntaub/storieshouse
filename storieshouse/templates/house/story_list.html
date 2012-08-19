@@ -1,0 +1,42 @@
+{% extends 'base.djt' %}
+
+{% block title_bar %}: All Stories{% endblock %}
+{% block home_active %}{% endblock %}
+{% block draft_active %}class="active"{% endblock %}
+
+{% block content %}
+<div class="span10 offset2">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Date Posted</th>
+				<th>Published</th>
+				<th>Word Count</th>
+				{% if request.user.is_staff %}
+				<th>Poster</th>
+				{% endif %}
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for object in object_list %}
+			<tr>
+				<td>{{ object.title }}</td>
+				<td>{{ object.date_added|date:"l, F d" }}</td>
+				<td>{{ object.published }}</td>
+				<td>{{ object.body|wordcount }}</td>
+				{% if request.user.is_staff %}
+				<td>{{ object.user }}</td>
+				{% endif %}
+				<td><a href="{% url story_update object.id %}" class="btn btn-mini">Edit</a> <a href="{% url story_delete object.id %}" class="btn btn-danger btn-mini">Delete</a></td>
+				<td></td>
+			{% empty %}
+			<tr>
+				<td colspan="5">You don't have any stories right now. Why not go <a href="{% url story_add %}">write</a> some right now?</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

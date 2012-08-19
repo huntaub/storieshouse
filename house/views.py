@@ -1,1 +1,50 @@
 # Create your views here.
+from django import forms
+from house.models import *
+
+class StoryForm(forms.ModelForm):
+    class Meta:
+        model = Story
+        exclude = ('user', 'date_added')
+
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
+from django.http import HttpResponseRedirect
+
+class StoryList(ListView):
+    template_name = "story_list.html"
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Story.objects.all()
+        else:
+            return Story.objects.filter(user = self.request.user)
+
+class HomePage(ListView):
+    template_name = 'base.djt'
+    model = Story
+
+    def get_queryset(self):
+        return Story.objects.filter(published = True)[:5]
+
+class StoryCreate(CreateView):
+    model = Story
+    form_class = StoryForm
+
+    def form_valid(self, form):
+        s = Story()
+        s.title = form.cleaned_data['title']
+        s.body = form.cleaned_data['body']
+        s.user = self.request.user
+        s.save()
+        return HttpResponseRedirect('/')
+
+class StoryUpdate(UpdateView):
+    model = Story
+    form_class = StoryForm
+    success_url = '/'
+
+class StoryDelete(DeleteView):
+    model = Story
+    success_url = '/'
