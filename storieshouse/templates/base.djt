@@ -20,6 +20,7 @@
     .no-padding { margin-left: 0; }
     .danger { color: red; }
     textarea { width: 80%; height: 275px; }
+    .big-icon { font-size: 100px; line-height: 90px; }
     </style>
 
     <!--[if lt IE 9]>
@@ -77,10 +78,15 @@
                     <div class="span3 info">
                         <h4>posted by: {{ object.user.first_name }} {{ object.user.last_name }}</h4>
                         <h4>on {{ object.date_added|date:"l, F d" }}</h4>
-                        {% if request.user == object.user %}
-                        <h4><a href="{% url story_update object.id %}">edit</a> | <a href="#">raw</a> | <a href="{% url story_delete object.id %}" class="danger">delete</a></h4>
+                        {% if request.user == object.user or request.user.is_staff %}
+                        <h4><a href="{% url story_update object.id %}">edit</a> | <a href="{% url story_delete object.id %}" class="danger">delete</a></h4>
                         {% endif %}
                         <!--<h4><a href="#">share</a></h4>!-->
+                        {% if object.icon %}
+                        <div class="big-icon">
+                            <i class="icon-{{ object.icon }}"></i>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="span7">
                         <div class="page-header">

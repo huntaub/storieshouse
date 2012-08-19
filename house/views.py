@@ -36,6 +36,8 @@ class StoryCreate(CreateView):
         s = Story()
         s.title = form.cleaned_data['title']
         s.body = form.cleaned_data['body']
+        s.published = form.cleaned_data['published']
+        s.icon = form.cleaned_data['icon']
         s.user = self.request.user
         s.save()
         return HttpResponseRedirect('/')
@@ -47,4 +49,4 @@ class StoryUpdate(UpdateView):
 
 class StoryDelete(DeleteView):
     model = Story
-    success_url = '/'
+    success_url = '/story/'
