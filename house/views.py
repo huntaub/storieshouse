@@ -5,7 +5,7 @@ from house.models import *
 class StoryForm(forms.ModelForm):
     class Meta:
         model = Story
-        exclude = ('user', 'date_added')
+        exclude = ('user', 'date_added', 'slug')
 
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -50,3 +50,10 @@ class StoryUpdate(UpdateView):
 class StoryDelete(DeleteView):
     model = Story
     success_url = '/story/'
+
+class StoryView(ListView):
+    template_name = 'base.djt'
+    model = Story
+
+    def get_queryset(self):
+        return Story.objects.filter(slug = self.kwargs['slug'], user = User.objects.get(username=self.kwargs['user']))
