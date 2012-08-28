@@ -7,7 +7,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'storieshouse.views.home', name='home'),
-    url(r'^', include('house.urls')),
 
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'admin/login.html'}),
     url(r'^logout/$', 'django.contrib.auth.views.logout'),
@@ -18,4 +17,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('house.urls')),
 )

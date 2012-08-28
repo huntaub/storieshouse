@@ -12,8 +12,17 @@
         font-family: 'Source Sans Pro', 'Helvetica Nueue', 'Helvetica', 'Ariel', sans-serif;
     }
     .logo i { font-size: 100px; line-height: 100px; }
-    .logo { position: fixed; left: 30px; }
-    .logo div#name { position: relative; top: -20px; }
+    .logo {
+        position: fixed;
+        margin-left: 30px;
+        width: 200px;
+        border-right-style: solid;
+        border-right-width: 1px;
+        border-right-color: #a4a4a4;
+        bottom: 0;
+        top: 0;
+    }
+    .logo div#name { position: relative; top: -20px; width: 92px; }
     .shnav { position: absolute; top: 30px; right: 30px; }
     .container { clear: both; padding-top: 90px; }
     .info { text-align: right; padding-top: 84px; }
