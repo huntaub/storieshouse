@@ -6,3 +6,11 @@ register = template.Library()
 @register.filter
 def drafts(object):
 	return Story.objects.filter(published = False, user = object)
+
+@register.simple_tag
+def total_users():
+	return User.objects.all().count()
+
+@register.simple_tag
+def total_stories():
+	return Story.objects.all().count()

@@ -22,10 +22,13 @@
         bottom: 0;
         top: 0;
     }
+    .logo hr { margin-right: 30px; margin-top: 0; }
+    #ack { bottom: 0; position: absolute; margin-left: -20px; margin-right: 10px; }
     .logo div#name { position: relative; top: -20px; width: 92px; }
     .shnav { position: absolute; top: 30px; right: 30px; }
     .container { clear: both; padding-top: 90px; }
     .info { text-align: right; padding-top: 84px; }
+    .info h4 { z-index: 9; position: relative; }
     .no-padding { margin-left: 0; }
     .danger { color: red; }
     textarea { width: 80%; height: 275px; }
@@ -55,6 +58,16 @@
                 <h1 style="font-weight: lighter; text-align: center;">stories<div style="font-size: 33px;">house</div></h1>
             </div>
         </a>
+        <hr/>
+        <div id="status">
+            <p>{% total_users %} Authors</p>
+            <p>{% total_stories %} Stories</p>
+        </div>
+        <div id="ack">
+            <h6>Font from <a href="http://www.google.com/webfonts/specimen/Source+Sans+Pro">Google Web Fonts</a></h6>
+            <h6>Icons by <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a></h6>
+            <h6>Design by <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></h6>
+        </div>
     </div>
     <ul class="shnav nav nav-pills pull-right">
         <li {% block home_active %}class="active"{% endblock %}><a href="/">Home</a></li>
