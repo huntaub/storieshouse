@@ -51,9 +51,10 @@ class StoryDelete(DeleteView):
     model = Story
     success_url = '/story/'
 
-class StoryView(ListView):
-    template_name = 'base.djt'
-    model = Story
-
+class StoryView(HomePage):
     def get_queryset(self):
         return Story.objects.filter(slug = self.kwargs['slug'], user = User.objects.get(username=self.kwargs['user']))
+
+class UserStoryView(HomePage):
+    def get_queryset(self):
+        return Story.objects.filter(user = User.objects.get(username=self.kwargs['user']))

@@ -12,6 +12,7 @@ admin.site.register(Story)
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', HomePage.as_view(), name='home'),
+    url(r'(?P<user>[-a-z0-9_]+)$', UserStoryView.as_view(), name="user_view"),
     url(r'(?P<user>[-a-z0-9_]+)/(?P<slug>[-a-z0-9_]+)$', StoryView.as_view(), name="story_view"),
     url(r'write/$', login_required(StoryCreate.as_view()), name='story_add'),
     url(r'story/$', login_required(StoryList.as_view()), name='story_list'),

@@ -22,6 +22,8 @@
     textarea { width: 80%; height: 275px; }
     .big-icon { font-size: 100px; line-height: 90px; }
     .link_title { color: black; }
+    a.plain { color: black; }
+    a.plain:hover { color: #005580; text-decoration: none; }
     </style>
 
     <!--[if lt IE 9]>
@@ -38,10 +40,12 @@
 </head>
 <body>
     <div class="logo">
-        <i class="icon-home"></i>
-        <div id="name">
-            <h1 style="font-weight: lighter;">stories<br/>house</h1>
-        </div>
+        <a href="/" class="plain">
+            <i class="icon-home"></i>
+            <div id="name">
+                <h1 style="font-weight: lighter; text-align: center;">stories<div style="font-size: 33px;">house</div></h1>
+            </div>
+        </a>
     </div>
     <ul class="shnav nav nav-pills pull-right">
         <li {% block home_active %}class="active"{% endblock %}><a href="/">Home</a></li>
@@ -77,7 +81,7 @@
                 {% for object in object_list %}
                 <div class="row">
                     <div class="span3 info">
-                        <h4>posted by: <a href="#" class="link_title">{{ object.user.first_name }} {{ object.user.last_name }}</a></h4>
+                        <h4>posted by: <a href="{% url user_view object.user %}" class="link_title">{{ object.user.first_name }} {{ object.user.last_name }}</a></h4>
                         <h4>on {{ object.date_added|date:"l, F d" }}</h4>
                         {% if request.user == object.user or request.user.is_staff %}
                         <h4><a href="{% url story_update object.id %}">edit</a> | <a href="{% url story_delete object.id %}" class="danger">delete</a></h4>
