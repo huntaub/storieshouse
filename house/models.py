@@ -15,6 +15,13 @@ class Story(models.Model):
 		("bell", "Bell"),
 		("bullhorn", "Bullhorn"),
 		("comment-alt", "Comment"),
+		("envelope-alt", "Envelope"),
+		("briefcase", "Briefcase"),
+		("dashboard", "Dashboard"),
+		("cloud", "Cloud"),
+		("film", "Film"),
+		("headpones", "Headphones"),
+		("calendar", "Calendar"),
 	)
 
 	title = models.CharField(max_length = 100)

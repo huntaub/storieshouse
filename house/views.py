@@ -55,8 +55,8 @@ class StoryDelete(DeleteView):
 class StoryView(HomePage):
     def get_queryset(self):
         user = User.objects.get(username=self.kwargs['user'])
-        return Story.objects.filter(slug = self.kwargs['slug'], user=user)
+        return Story.objects.filter(slug = self.kwargs['slug'], user=user, published=True)
 
 class UserStoryView(HomePage):
     def get_queryset(self):
-        return Story.objects.filter(user = User.objects.get(username=self.kwargs['user']))
+        return Story.objects.filter(user = User.objects.get(username=self.kwargs['user']), published=True)
