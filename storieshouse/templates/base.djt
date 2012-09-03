@@ -62,6 +62,12 @@
         <div id="status">
             <p>{% total_users %} Authors</p>
             <p>{% total_stories %} Stories</p>
+            <p>Top Stories</p>
+            <ul class="no-style">
+                {% for object in object_list %}
+                <li><a href="#{{ object.slug }}">{{ object.title }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
         <div id="ack">
             <h6>Font from <a href="http://www.google.com/webfonts/specimen/Source+Sans+Pro">Google Web Fonts</a></h6>
@@ -101,7 +107,7 @@
             {% block content %}
             <div class="span10 offset1">
                 {% for object in object_list %}
-                <div class="row">
+                <div class="row" id="{{ object.slug }}">
                     <div class="span3 info">
                         <h4>posted by: <a href="{% url user_view object.user %}" class="link_title">{{ object.user.first_name }} {{ object.user.last_name }}</a></h4>
                         <h4>on {{ object.date_added|date:"l, F d" }}</h4>
