@@ -24,7 +24,7 @@ class Story(models.Model):
 		("calendar", "Calendar"),
 	)
 
-	title = models.CharField(max_length = 100)
+	title = models.CharField(max_length = 255)
 	body = models.TextField()
 	icon = models.CharField(max_length = 30, choices = ICON_CHOICES, blank = True, null = True)
 	user = models.ForeignKey(User)
