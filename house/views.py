@@ -1,8 +1,10 @@
 # Create your views here.
 from django import forms
 from house.models import *
+from django.forms.widgets import TextInput
 
 class StoryForm(forms.ModelForm):
+    title = forms.CharField(widget = TextInput(attrs = {'style': 'width: 500px'}))
     class Meta:
         model = Story
         exclude = ('user', 'date_added', 'slug')

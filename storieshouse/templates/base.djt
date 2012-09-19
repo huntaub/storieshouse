@@ -27,7 +27,7 @@
     .logo div#name { position: relative; top: -20px; width: 92px; }
     .shnav { position: absolute; top: 30px; right: 30px; }
     .container { clear: both; padding-top: 90px; }
-    .info { text-align: right; padding-top: 84px; }
+    .info { text-align: right; }
     .info h4 { z-index: 9; position: relative; }
     .no-padding { margin-left: 0; }
     .danger { color: red; }
@@ -108,24 +108,30 @@
             <div class="span10 offset2">
                 {% for object in object_list %}
                 <div class="row" id="{{ object.slug }}">
-                    <div class="span3 info">
-                        <h4>posted by: <a href="{% url user_view object.user %}" class="link_title">{{ object.user.first_name }} {{ object.user.last_name }}</a></h4>
-                        <h4>on {{ object.date_added|date:"l, F d" }}</h4>
-                        {% if request.user == object.user or request.user.is_staff %}
-                        <h4><a href="{% url story_update object.id %}">edit</a> | <a href="{% url story_delete object.id %}" class="danger">delete</a></h4>
-                        {% endif %}
-                        <!--<h4><a href="#">share</a></h4>!-->
-                        {% if object.icon %}
-                        <div class="big-icon">
-                            <i class="icon-{{ object.icon }}"></i>
+                    <div class="row">
+                        <div class="span7 offset3">  
+                            <div class="page-header">
+                                <h1><a href="{% url story_view slug=object.slug user=object.user.username %}" class="link_title">{{ object.title }}</a></h1>
+                            </div>
                         </div>
-                        {% endif %}
                     </div>
-                    <div class="span7">
-                        <div class="page-header">
-                            <h1><a href="{% url story_view slug=object.slug user=object.user.username %}" class="link_title">{{ object.title }}</a></h1>
+                    <div class="row">
+                        <div class="span3 info">
+                            <h4>posted by: <a href="{% url user_view object.user %}" class="link_title">{{ object.user.first_name }} {{ object.user.last_name }}</a></h4>
+                            <h4>on {{ object.date_added|date:"l, F d" }}</h4>
+                            {% if request.user == object.user or request.user.is_staff %}
+                            <h4><a href="{% url story_update object.id %}">edit</a> | <a href="{% url story_delete object.id %}" class="danger">delete</a></h4>
+                            {% endif %}
+                            <!--<h4><a href="#">share</a></h4>!-->
+                            {% if object.icon %}
+                            <div class="big-icon">
+                                <i class="icon-{{ object.icon }}"></i>
+                            </div>
+                            {% endif %}
                         </div>
-                        {{ object.body|markdown }}
+                        <div class="span7">
+                            {{ object.body|markdown }}
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
