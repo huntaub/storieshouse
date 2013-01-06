@@ -32,7 +32,6 @@
 /*  Font Awesome styles
     ------------------------------------------------------- */
 [class^="icon-"]:before, [class*=" icon-"]:before {
-  color: black;
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;

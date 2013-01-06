@@ -1,10 +1,12 @@
 # Create your views here.
 from django import forms
 from house.models import *
-from django.forms.widgets import TextInput
+from django.views.generic.detail import DetailView
+from django.forms.widgets import TextInput, Textarea
 
 class StoryForm(forms.ModelForm):
     title = forms.CharField(widget = TextInput(attrs = {'style': 'width: 500px'}))
+    body = forms.CharField(widget = Textarea(attrs = {'style': 'width: 500px'}))
     class Meta:
         model = Story
         exclude = ('user', 'date_added', 'slug')
@@ -54,10 +56,12 @@ class StoryDelete(DeleteView):
     success_url = '/story/'
 
 
-class StoryView(HomePage):
-    def get_queryset(self):
+class StoryView(DetailView):
+    model = Story
+
+    def get_object(self):
         user = User.objects.get(username=self.kwargs['user'])
-        return Story.objects.filter(slug = self.kwargs['slug'], user=user, published=True)
+        return Story.objects.get(slug = self.kwargs['slug'], user=user, published=True)
 
 class UserStoryView(HomePage):
     def get_queryset(self):
