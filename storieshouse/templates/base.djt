@@ -19,13 +19,13 @@
         </a>
         <div class="navigation pull-right">
             <div class="triangle-topleft pull-left"></div>
-            <ul class="shnav nav nav-pills pull-right">
+            <ul class="shnav nav nav-pills">
                 <li {% block home_active %}class="active"{% endblock %}><a href="/">Home</a></li>
                 {% if request.user.is_authenticated %}
                 <li {% block write_active %}{% endblock %}><a href="/write/">Write</a></li>
                 <li {% block draft_active %}{% endblock %}>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
-                    <ul class="dropdown-menu pull-right" id="draftDrop">
+                    <ul class="dropdown-menu" id="draftDrop">
                         {% for draft in request.user|drafts %}
                         <li><a href="{% url story_update draft.id %}">{{ draft.title }}</a></li>
                         {% empty %}
@@ -37,7 +37,7 @@
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
-                    <ul class="dropdown-menu pull-right">
+                    <ul class="dropdown-menu">
                         <li><a href="/change_password/">Change Password</a></li>
                         <li><a href="/logout/">Logout</a></li>
                     </ul>
@@ -80,11 +80,11 @@
                             <h3><a href="{% url story_view slug=object.slug user=object.user.username %}" class="link_title">{{ object.title }}</a></h3>
                             <div class="row story-meta">
                                 <!-- Metadata -->
-                                <div class="span2">
+                                <div class="span3">
                                     <p>by: <a href="{% url user_view object.user %}" class="link_title">{{ object.user.first_name }} {{ object.user.last_name }}</a></p>
                                     <p>posted on {{ object.date_added|date:"F d" }}</p>
                                 </div>
-                                <div class="span2 offset1">
+                                <div class="span2">
                                     <p class="right">{{ object.body|wordcount }} words</p>
                                 </div>
                             </div>
