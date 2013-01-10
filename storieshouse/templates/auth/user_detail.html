@@ -44,7 +44,7 @@
 		<div class="span10">
 			<h5>All Stories</h5>
 			{% for story in stories %}
-			<a href="#"><div class="pull-left story-block">
+			<a href="{% url story_view slug=story.slug user=object.username %}"><div class="pull-left story-block">
 				<i class="icon-{% firstof story.icon "align-left" %} large-icon"></i>	
 				<p>{{ story.title }}</p>
 			</div></a>

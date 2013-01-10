@@ -83,7 +83,7 @@
                                 <div class="row story-meta">
                                     <!-- Metadata -->
                                     <div class="span3">
-                                        <p>{{ object.body|wordcount }} words by <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a> on 8/12/12</p>
+                                        <p>{{ object.body|wordcount }} words by <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a> on {{ object.date_added|date:"F d" }}</p>
                                         <p>posted in <a href="#">{{ object.category.name }}</a></p>
                                     </div>
                                 </div>
