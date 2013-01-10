@@ -17,6 +17,8 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('house', ['Category'])
 
+        db.execute("INSERT INTO house_category VALUES (1, 'NONE', '', 'Uncategorized posts.'")
+
         # Adding field 'Story.category'
         db.add_column('house_story', 'category',
                       self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['house.Category']),
