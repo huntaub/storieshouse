@@ -9,7 +9,7 @@ class StoryForm(forms.ModelForm):
     body = forms.CharField(widget = Textarea(attrs = {'style': 'width: 500px'}))
     class Meta:
         model = Story
-        exclude = ('user', 'date_added', 'slug')
+        exclude = ('user', 'date_added', 'slug', 'viewcount')
 
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView

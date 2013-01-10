@@ -36,7 +36,7 @@ class Story(models.Model):
 		("dashboard", "Dashboard"),
 		("cloud", "Cloud"),
 		("film", "Film"),
-		("headpones", "Headphones"),
+		("headphones", "Headphones"),
 		("calendar", "Calendar"),
 	)
 
