@@ -2,7 +2,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 header {
-  color: white;
+  color: #f9f9f9;
   background-color: #af0014;
   position: relative;
   min-width: 940px;
@@ -31,6 +31,14 @@ header i {
   line-height: 100%;
   padding-left: 7px;
   padding-right: 5px;
+}
+.footer {
+  background-color: #af0014;
+  color: #f9f9f9;
+  border-top: solid 1px #404040;
+}
+.footer .well {
+  padding: 8px 0;
 }
 .triangle-topleft {
   width: 0;
@@ -144,7 +152,7 @@ hr {
 }
 .container {
   background-color: white;
-  padding-bottom: 60px;
+  padding-bottom: 15px;
 }
 .label a {
   color: white;
