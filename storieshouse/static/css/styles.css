@@ -149,6 +149,9 @@ div.navigation {
 .shard:hover .shape.analysis {
   background-color: orange;
 }
+.shard:hover .shape.thoughts {
+  background-color: blue;
+}
 a.shard_link:hover {
   text-decoration: none;
 }
