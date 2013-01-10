@@ -4,6 +4,10 @@ from house.models import *
 register = template.Library()
 
 @register.filter
+def full_name(object):
+	return "%s %s" % (object.first_name, object.last_name)
+
+@register.filter
 def drafts(object):
 	return Story.objects.filter(published = False, user = object)
 

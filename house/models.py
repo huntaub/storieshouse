@@ -3,6 +3,22 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
 
+class Category(models.Model):
+	name = models.CharField(max_length = 15)
+	html_class = models.CharField(max_length = 15)
+	description = models.TextField()
+
+	def __unicode__(self):
+		return self.name
+
+class StoryAuthor(models.Model):
+	user = models.ForeignKey(User)
+	about = models.TextField()
+
+	@staticmethod
+	def find(u):
+		return StoryAuthor.objects.get_or_create(user=u)
+
 # Create your models here.
 class Story(models.Model):
 	ICON_CHOICES = (
@@ -28,8 +44,10 @@ class Story(models.Model):
 	body = models.TextField()
 	icon = models.CharField(max_length = 30, choices = ICON_CHOICES, blank = True, null = True)
 	user = models.ForeignKey(User)
+	category = models.ForeignKey(Category)
 	published = models.BooleanField()
 	slug = models.SlugField()
+	viewcount = models.IntegerField()
 	date_added = models.DateTimeField(auto_now_add=True)
 
 	class Meta:

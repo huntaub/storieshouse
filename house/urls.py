@@ -23,5 +23,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
 
     url(r'(?P<user>[-a-z0-9_]+)/(?P<slug>[-a-z0-9_]+)/$', StoryView.as_view(), name="story_view"),
-    url(r'(?P<user>[-a-z0-9_]+)/$', UserStoryView.as_view(), name="user_view"),
+    url(r'(?P<pk>[-a-z0-9_]+)/$', UserStoryView.as_view(), name="user_view"),
 )

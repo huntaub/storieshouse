@@ -5,9 +5,7 @@
 <head>
     <title>StoriesHouse{% block title_bar %}{% endblock %}</title>
     <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <link href="/static/css/sh.css" rel="stylesheet">
-    <!-- <link rel="stylesheet/less" href="css/sh.less"> -->
-    <!-- // <script src="js/less.js"></script> -->
+    <link href="/static/css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/font-awesome.css">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,400italic' rel='stylesheet' type='text/css'>
 </head>
@@ -51,54 +49,54 @@
     <div class="sidebar pull-left">
         <div class="triangle-topleft"></div>
         <br class="spacer"/>
-        <!-- <a href="#" class="shard_link">
-                <div class="shard">
-                <div class="shape orange"></div>
-                <h4>HUMOR</h4>
-            </div>
-        </a>
+        {% block shard %}
         <a href="#" class="shard_link">
                 <div class="shard">
-                <div class="shape green"></div>
-                <h4>OTHER</h4>
+                <div class="shape {% firstof object_list.0.category.html_class object.category.name %}"></div>
+                <h4>{% firstof object_list.0.category.name object.category.name %}</h4>
             </div>
-        </a> -->
+        </a>
+        {% endblock %}
     </div>
+    {% block shard_header %}{% endblock %}
     <div class="container">
         <div class="row">
             {% block content %}
-            <div class="span7">
-                <h2>Latest Stories</h2>
+            <div class="span6 featured">
+                <h2>Featured Story</h2>
+                <i class="icon-{{ object_list.0.icon }} large-icon pull-left" style="margin-right: 0px;"></i>
+                <h3><a href="{% url story_view slug=object_list.0.slug user=object_list.0.user.username %}">{{ object_list.0.title }}</a></h3>
+                <h5>posted by <a href="{% url user_view object_list.0.user %}">{{ object_list.0.user|full_name }}</a></h5>
+                <h5>{{ object_list.0.date_added|timesince }} ago</h5>
+                <br/>
+                {{ object_list.0.body|markdown }}
+            </div>
+            <div class="span4">
+                <h2>The Latest</h2>
                 {% for object in object_list %}
-                    <div class="row story">
-                        <div class="span1">
-                            <!-- Icon -->
-                            <i class="icon-{{ object.icon }} large-icon"></i>
-                        </div>
-                        <div class="span6">
-                            <!-- Story Header -->
-                            <h3><a href="{% url story_view slug=object.slug user=object.user.username %}" class="link_title">{{ object.title }}</a></h3>
-                            <div class="row story-meta">
-                                <!-- Metadata -->
-                                <div class="span3">
-                                    <p>by: <a href="{% url user_view object.user %}" class="link_title">{{ object.user.first_name }} {{ object.user.last_name }}</a></p>
-                                    <p>posted on {{ object.date_added|date:"F d" }}</p>
-                                </div>
-                                <div class="span2">
-                                    <p class="right">{{ object.body|wordcount }} words</p>
+                    {% if not forloop.first %}
+                        <div class="row story">
+                            <div class="span1"><h1>{{ forloop.counter }}</h1></div>
+                            <div class="span3">
+                                <!-- Story Header -->
+                                <h5><i class="icon-none"></i> <a href="{% url story_view slug=object.slug user=object.user.username %}">{{ object.title }}</a></h5>
+                                <div class="row story-meta">
+                                    <!-- Metadata -->
+                                    <div class="span3">
+                                        <p>{{ object.body|wordcount }} words by <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a> on 8/12/12</p>
+                                        <p>posted in <a href="#">{{ object.category.name }}</a></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <hr/>
+                        <hr/>
+                    {% endif %}
                 {% endfor %}
-            </div>
-            <div class="span3 right-align">
-                <!-- <h2>Top Authors</h2>
-                <div class="right-align">
-                    <h4><a href="#">Nick Suss</a></h4>
-                    <h4><a href="#">Tyler Martin</a></h4>
-                    <h4><a href="#">Tyler Stern</a></h4>
+                <br/>
+                <!-- <div class="row">
+                    <div class="span4 right-align">
+                        <a class="btn btn-mini right-align">See All Stories</a>
+                    </div>
                 </div> !-->
             </div>
             {% endblock %}
