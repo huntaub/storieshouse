@@ -11,6 +11,12 @@ class StoryForm(forms.ModelForm):
         model = Story
         exclude = ('user', 'date_added', 'slug', 'viewcount')
 
+class StoryAuthorForm(forms.ModelForm):
+    about = forms.CharField(widget = Textarea(attrs = {'style': 'width: 500px'}))
+    class Meta:
+        model = StoryAuthor
+        exclude = ('user')
+
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
@@ -78,3 +84,21 @@ class UserStoryView(DetailView):
     def get_object(self):
         self.object = User.objects.get(username=self.kwargs['pk'])
         return self.object
+
+class AuthorUpdate(UpdateView):
+    model = StoryAuthor
+    form_class = StoryAuthorForm
+    success_url = "/"
+
+    def get_object(self):
+        return StoryAuthor.find(self.request.user)
+
+class CategoryView(DetailView):
+    model = Category
+
+    def get_context_data(self, **kwargs):
+        kwargs['top_story'] = self.object.story_set.order_by('-viewcount')[:3]
+        return super(CategoryView, self).get_context_data(**kwargs)
+
+    def get_object(self):
+        return Category.objects.get(name__iexact=self.kwargs['name'])

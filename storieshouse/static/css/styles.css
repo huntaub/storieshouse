@@ -37,8 +37,11 @@ header i {
   color: #f9f9f9;
   border-top: solid 1px #404040;
 }
-.footer .well {
-  padding: 8px 0;
+.footer .nav li a {
+  background-color: #ececec;
+}
+.footer .nav li a:hover {
+  background-color: #fff;
 }
 .triangle-topleft {
   width: 0;
@@ -98,6 +101,19 @@ div.navigation {
   font-size: 80px;
   line-height: 100%;
 }
+.full_title {
+  height: 85px;
+}
+.full_title .text {
+  position: relative;
+  top: 10px;
+}
+.full_title.user {
+  background-color: #ffeff6;
+}
+.full_title.humor {
+  background-color: #eaffed;
+}
 .shard {
   height: 94px;
 }
@@ -121,10 +137,10 @@ div.navigation {
 .shard:hover h4 {
   color: white;
 }
-.shard:hover .shape.green {
+.shard:hover .shape.humor {
   background-color: green;
 }
-.shard:hover .shape.orange {
+.shard:hover .shape.analysis {
   background-color: orange;
 }
 a.shard_link:hover {

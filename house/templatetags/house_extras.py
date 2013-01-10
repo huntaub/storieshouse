@@ -18,3 +18,22 @@ def total_users():
 @register.simple_tag
 def total_stories():
 	return Story.objects.all().count()
+
+@register.simple_tag
+def category_nav():
+	c = Category.objects.all()
+	output = ""
+	for category in c:
+		if (category.name == "NONE"):
+			continue
+		output += "<li><a href='" + cat_url(category) + "'>" + category.name + "</a></li>"
+	return output
+
+@register.filter
+def cat_url(object):
+	if (object == None): 
+		return None
+	elif (object.name == "NONE"):
+		return "#"
+	else:
+		return ("/category/" + object.name.lower())

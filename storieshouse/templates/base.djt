@@ -36,6 +36,7 @@
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
                     <ul class="dropdown-menu pull-right">
+                        <li><a href="/account/">Edit Account</a></li>
                         <li><a href="/change_password/">Change Password</a></li>
                         <li><a href="/logout/">Logout</a></li>
                     </ul>
@@ -50,9 +51,9 @@
         <div class="triangle-topleft"></div>
         <br class="spacer"/>
         {% block shard %}
-        <a href="#" class="shard_link">
-                <div class="shard">
-                <div class="shape {% firstof object_list.0.category.html_class object.category.name %}"></div>
+        <a href="{% firstof object_list.0.category|cat_url object.category|cat_url %}" class="shard_link">
+            <div class="shard">
+                <div class="shape {% firstof object_list.0.category.html_class object.category.html_class %}"></div>
                 <h4>{% firstof object_list.0.category.name object.category.name %}</h4>
             </div>
         </a>
@@ -84,7 +85,7 @@
                                     <!-- Metadata -->
                                     <div class="span3">
                                         <p>{{ object.body|wordcount }} words by <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a> on {{ object.date_added|date:"F d" }}</p>
-                                        <p>posted in <a href="#">{{ object.category.name }}</a></p>
+                                        <p>posted in <a href="{{ object.category|cat_url }}">{{ object.category.name }}</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +120,23 @@
             </form>
         </div>
     </div>
+        <div class="footer row">
+            <div class="span4 offset2">
+                <h2><i class="icon-home"></i> storieshouse</h2>
+                <p>A collection of stories gathered from people with all different kinds of life experiences. Our well-vetted authors post expert commentary on the world around them.</p>
+                <!--<p>If you think you have what it takes to write for us, sign up below.</p>
+                <p style="text-align: center;"><a href="/sign_up" class="btn btn-large">Sign Up</a></p>!-->
+                <br/>
+            </div>
+            <div class="span4 offset1">
+                <h4>Categories</h4>
+                <ul class="nav nav-tabs nav-stacked">
+                    {% category_nav %}
+                </ul>
+            </div>
+        </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/static/js/masonry.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
 </body>
 </html>

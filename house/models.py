@@ -15,9 +15,13 @@ class StoryAuthor(models.Model):
 	user = models.ForeignKey(User)
 	about = models.TextField()
 
+	def __unicode__(self):
+		return "StoryAuthor: %s" % self.user.username
+
 	@staticmethod
 	def find(u):
-		return StoryAuthor.objects.get_or_create(user=u)
+		author, created = StoryAuthor.objects.get_or_create(user=u)
+		return author
 
 # Create your models here.
 class Story(models.Model):
@@ -38,6 +42,12 @@ class Story(models.Model):
 		("film", "Film"),
 		("headphones", "Headphones"),
 		("calendar", "Calendar"),
+		("coffee", "Coffee"),
+		("leaf", "Leaf"),
+		("refresh", "Refresh"),
+		("glass", "Martini"),
+		("camera-retro", "Camera"),
+		("laptop", "Laptop")
 	)
 
 	title = models.TextField()

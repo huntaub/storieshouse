@@ -1,0 +1,48 @@
+{% extends 'base.djt' %}
+{% load house_extras %}
+
+{% block title_bar %}: {{ object.name }}{% endblock %}
+{% block home_active %}{% endblock %}
+
+{% block shard %}{% endblock %}
+
+{% block shard_header %}
+	<div class="row full_title {{ object.html_class }}">
+		<div class="span4 text">
+			<h1>{{ object.name }}</h1>
+		</div>
+	</div>
+{% endblock %}
+
+{% block content %}
+<div class="span10">
+	<div class="row">
+		<div class="span10">
+			<h3>{{ object.description }}</h3>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="span8">
+			<h5>Most Read Story</h5>
+			<h1><a href="">{{ top_story.0.title }}</a></h1>
+		</div>
+		<div class="span2">
+			<h5>Total Views</h5>
+			<h1>{{ top_story.0.viewcount }}</h1>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="span10">
+			<h5>Latest Stories</h5>
+			{% for story in object.story_set.all %}
+			<a href=""><div class="pull-left story-block">
+				<i class="icon-{% firstof story.icon "align-left" %} large-icon"></i>	
+				<p>{{ story.title }}</p>
+			</div></a>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}
