@@ -101,4 +101,5 @@ class CategoryView(DetailView):
         return super(CategoryView, self).get_context_data(**kwargs)
 
     def get_object(self):
-        return Category.objects.get(name__iexact=self.kwargs['name'])
+        self.object = Category.objects.get(name__iexact=self.kwargs['name'])
+        return self.object
