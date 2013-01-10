@@ -114,6 +114,12 @@ div.navigation {
 .full_title.humor {
   background-color: #eaffed;
 }
+.full_title.analysis {
+  background-color: #fffee6;
+}
+.full_title.thoughts {
+  background-color: #e0f0ff;
+}
 .shard {
   height: 94px;
 }
