@@ -48,6 +48,8 @@ class StoryCreate(CreateView):
         s.body = form.cleaned_data['body']
         s.published = form.cleaned_data['published']
         s.icon = form.cleaned_data['icon']
+        s.category = form.cleaned_data['category']
+        s.viewcount = 0
         s.user = self.request.user
         s.save()
         return HttpResponseRedirect('/')
