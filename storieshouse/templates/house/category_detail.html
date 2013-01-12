@@ -25,7 +25,7 @@
 	<div class="row">
 		<div class="span8">
 			<h5>Most Read Story</h5>
-			<h1><a href="">{{ top_story.0.title }}</a></h1>
+			<h1><a href="{% url story_view slug=top_story.0.slug user=top_story.0.user.username %}">{{ top_story.0.title }}</a></h1>
 		</div>
 		<div class="span2">
 			<h5>Total Views</h5>
@@ -37,7 +37,7 @@
 		<div class="span10">
 			<h5>Latest Stories</h5>
 			{% for story in object.story_set.all %}
-			<a href=""><div class="pull-left story-block">
+			<a href="{% url story_view slug=story.slug user=story.user.username %}"><div class="pull-left story-block">
 				<i class="icon-{% firstof story.icon "align-left" %} large-icon"></i>	
 				<p>{{ story.title }}</p>
 			</div></a>
