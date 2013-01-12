@@ -37,3 +37,7 @@ def cat_url(object):
 		return "#"
 	else:
 		return ("/category/" + object.name.lower())
+
+@register.inclusion_tag('grid.html')
+def story_grid(story_list):
+	return {'stories': story_list}
