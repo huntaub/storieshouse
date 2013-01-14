@@ -36,7 +36,11 @@ class HomePage(ListView):
     model = Story
 
     def get_queryset(self):
-        return Story.objects.filter(published = True)[:5]
+        stories = Story.objects.filter(published = True)[:5]
+        top = stories[0]
+        top.viewcount += 1
+        top.save()
+        return stories
 
 class StoryCreate(CreateView):
     model = Story
