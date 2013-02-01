@@ -4,6 +4,7 @@ from house.models import *
 from django.views.generic.detail import DetailView
 from django.forms.widgets import TextInput, Textarea
 from django.db.models import Q
+from django.core.urlresolvers import reverse
 
 class StoryForm(forms.ModelForm):
     title = forms.CharField(widget = TextInput(attrs = {'style': 'width: 500px'}))
@@ -57,12 +58,15 @@ class StoryCreate(CreateView):
         s.viewcount = 0
         s.user = self.request.user
         s.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('story_view', kwargs={'slug':s.slug, 'user':s.user}))
 
 class StoryUpdate(UpdateView):
     model = Story
     form_class = StoryForm
     success_url = '/'
+
+    def get_success_url(self):
+        return reverse('story_view', kwargs={'slug':self.object.slug, 'user':self.object.user}) 
 
 class StoryDelete(DeleteView):
     model = Story
