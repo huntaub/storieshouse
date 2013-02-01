@@ -9,6 +9,17 @@
 
 {% block content %}
 <div class="span9">
+	{% if not object.published %}
+	<br/><br/>
+	<div class="row">
+		<div class="span6 offset2">
+			<div class="alert alert-info">
+				<h4>DRAFT</h4>
+				<p>Remember that this story is still a draft. Only you can see this page. To publish this story, click on the edit button below and check the 'publish' box.</p>
+			</div>
+		</div>
+	</div>
+	{% endif %}
 	<div class="row">
 		<div class="span6 offset2">  
 			<div class="page-header">

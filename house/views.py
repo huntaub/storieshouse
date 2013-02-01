@@ -3,6 +3,7 @@ from django import forms
 from house.models import *
 from django.views.generic.detail import DetailView
 from django.forms.widgets import TextInput, Textarea
+from django.db.models import Q
 
 class StoryForm(forms.ModelForm):
     title = forms.CharField(widget = TextInput(attrs = {'style': 'width: 500px'}))
@@ -73,7 +74,7 @@ class StoryView(DetailView):
 
     def get_object(self):
         user = User.objects.get(username=self.kwargs['user'])
-        story = Story.objects.get(slug = self.kwargs['slug'], user=user, published=True)
+        story = Story.objects.get(Q(slug = self.kwargs['slug'], user=user), Q(published=True) | Q(published=False, user=self.request.user))
         story.viewcount += 1
         story.save()
         return story
@@ -82,7 +83,7 @@ class UserStoryView(DetailView):
     model = User
 
     def get_context_data(self, **kwargs):
-        kwargs['stories'] = self.object.story_set.all
+        kwargs['stories'] = self.object.story_set.filter(published=True)
         kwargs['profile'] = StoryAuthor.find(self.object)
         kwargs['top_story'] = self.object.story_set.order_by('-viewcount')[0]
         return super(UserStoryView, self).get_context_data(**kwargs)

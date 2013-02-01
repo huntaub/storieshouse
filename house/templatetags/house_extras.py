@@ -41,3 +41,10 @@ def cat_url(object):
 @register.inclusion_tag('grid.html')
 def story_grid(story_list):
 	return {'stories': story_list}
+
+# def to_months(story_list):
+# 	output = []
+# 	current_month = {'name': 'n', 'content': []}
+# 	for story in story_list:
+# 		if current_month.name == 'n':
+# 			current_month.name = story.date_added

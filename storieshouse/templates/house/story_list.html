@@ -24,7 +24,7 @@
 		<tbody>
 			{% for object in object_list %}
 			<tr>
-				<td>{{ object.title }}</td>
+				<td><a href="{% url story_view user=object.user slug=object.slug %}">{{ object.title }}</a></td>
 				<td>{{ object.date_added|date:"l, F d" }}</td>
 				<td>{{ object.published }}</td>
 				<td>{{ object.body|wordcount }}</td>
