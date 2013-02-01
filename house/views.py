@@ -89,7 +89,7 @@ class UserStoryView(DetailView):
     def get_context_data(self, **kwargs):
         kwargs['stories'] = self.object.story_set.filter(published=True)
         kwargs['profile'] = StoryAuthor.find(self.object)
-        kwargs['top_story'] = self.object.story_set.order_by('-viewcount')[0]
+        kwargs['top_story'] = self.object.story_set.filter(published=True).order_by('-viewcount')[0]
         return super(UserStoryView, self).get_context_data(**kwargs)
 
     def get_object(self):
