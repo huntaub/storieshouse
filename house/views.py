@@ -78,7 +78,7 @@ class StoryView(DetailView):
 
     def get_object(self):
         user = User.objects.get(username=self.kwargs['user'])
-        story = Story.objects.get(Q(slug = self.kwargs['slug'], user=user), Q(published=True) | Q(published=False, user=self.request.user))
+        story = Story.objects.get(Q(slug = self.kwargs['slug'], user=user.pk), Q(published=True) | Q(published=False, user=self.request.user.pk))
         story.viewcount += 1
         story.save()
         return story
