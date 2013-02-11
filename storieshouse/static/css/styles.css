@@ -120,6 +120,12 @@ div.navigation {
 .full_title.thoughts {
   background-color: #e0f0ff;
 }
+.full_title.anecdote {
+  background-color: #e5cbff;
+}
+.full_title.fiction {
+  background-color: #ffeada;
+}
 .shard {
   height: 94px;
 }
