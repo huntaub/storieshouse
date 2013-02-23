@@ -70,7 +70,7 @@
                 <h5>posted by <a href="{% url user_view object_list.0.user %}">{{ object_list.0.user|full_name }}</a></h5>
                 <h5>{{ object_list.0.date_added|timesince }} ago</h5>
                 <br/>
-                {{ object_list.0.body|markdown }}
+                {% story_render object_list.0 %}
             </div>
             <div class="span4">
                 <h2>The Latest</h2>

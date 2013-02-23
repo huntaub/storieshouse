@@ -1,4 +1,4 @@
-{% extends 'base.djt' %}
+{% extends 'base.html' %}
 
 {% load markup %}
 {% load house_extras %}
@@ -42,7 +42,7 @@
 			<!--<h5><a href="#">share</a></h5>!-->
 		</div>
 		<div class="span7">
-			{{ object.body|markdown }}
+			{% story_render object %}
 		</div>
 	</div>
 </div>

@@ -34,7 +34,7 @@ class StoryList(ListView):
             return Story.objects.filter(user = self.request.user)
 
 class HomePage(ListView):
-    template_name = 'base.djt'
+    template_name = 'base.html'
     model = Story
 
     def get_queryset(self):
