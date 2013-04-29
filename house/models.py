@@ -67,5 +67,8 @@ class Story(models.Model):
 		self.slug = slugify(self.title)
 		super(Story, self).save(*args, **kwargs)
 
+	def get_absolute_url(self):
+		return ("/" + self.user.username + "/" + self.slug)
+
 	def __unicode__(self):
 		return '%s by %s' % (self.title, self.user)
