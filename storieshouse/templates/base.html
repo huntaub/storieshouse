@@ -72,8 +72,10 @@
                 <br/>
                 {% story_render object_list.0 %}
             </div>
-            <div class="span4">
+            <div class="span4 sidebar">
                 <h2>The Latest</h2>
+				<h6><a href="/feeds/latest/">feed</a></h6>
+				<hr/>
                 {% for object in object_list %}
                     {% if not forloop.first %}
                         <div class="row story">
@@ -98,8 +100,10 @@
                         <a class="btn btn-mini right-align">See All Stories</a>
                     </div>
                 </div> !-->
+				<br/>
 				<h2>StoriesTime</h2>
 				<h6><a href="https://itunes.apple.com/us/podcast/storiestime/id649217761">subscribe in itunes</a> &middot; <a href="/podcast/storiestime/feed">feed</a></h6>
+				<hr/>
 				{% for object in podcast_list %}
 				<div class="row story">
 					<div class="span1"><h1>{{ forloop.counter }}</h1></div>

@@ -16,6 +16,8 @@ urlpatterns = patterns('',
 
     url(r'category/(?P<name>[-a-z0-9_]+)/$', CategoryView.as_view(), name='category_view'),
 
+	url(r'feeds/latest/$', LatestEntriesFeed()),
+
     url(r'account/$', login_required(AuthorUpdate.as_view()), name='author_update'),
 
     url(r'(?P<user>[-a-z0-9_]+)/(?P<slug>[-a-z0-9_]+)/$', StoryView.as_view(), name="story_view"),

@@ -204,3 +204,10 @@ hr {
   width: 80%;
   height: 100px;
 }
+.sidebar h2 {
+    margin-bottom: 0;
+    padding: 0;
+}
+.sidebar h6 {
+    margin: 0;
+}
