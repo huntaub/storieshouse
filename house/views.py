@@ -1,6 +1,7 @@
 # Create your views here.
 from django import forms
 from house.models import *
+from podcast.models import *
 from django.views.generic.detail import DetailView
 from django.forms.widgets import TextInput, Textarea
 from django.db.models import Q
@@ -43,6 +44,11 @@ class HomePage(ListView):
         top.viewcount += 1
         top.save()
         return stories
+	
+    def get_context_data(self, **kwargs):
+        context = super(HomePage, self).get_context_data(**kwargs)
+        context['podcast_list'] = Episode.objects.all()
+        return context
 
 class StoryCreate(CreateView):
     model = Story

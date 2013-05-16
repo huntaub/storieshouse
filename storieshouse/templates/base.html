@@ -93,12 +93,36 @@
                         <hr/>
                     {% endif %}
                 {% endfor %}
-                <br/>
                 <!-- <div class="row">
                     <div class="span4 right-align">
                         <a class="btn btn-mini right-align">See All Stories</a>
                     </div>
                 </div> !-->
+				<h2>StoriesTime</h2>
+				<h6><a href="#">subscribe in itunes</a> &middot; <a href="/podcast/storiestime/feed">feed</a></h6>
+				{% for object in podcast_list %}
+				<div class="row story">
+					<div class="span1"><h1>{{ forloop.counter }}</h1></div>
+					<div class="span3">
+						<!-- Story Header -->
+						<h5><i class="icon-none"></i> <a href="#">{{ object.name }}</a></h5>
+						<div class="row story-meta">
+							<!-- Metadata -->
+							<div class="span3">
+								<p>Recorded On {{ object.data_published|date:"F d" }}</p>
+								<audio controls>
+									<source src="{{ object.audio }}">
+									Your browser does not support this.
+								</audio>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr/>
+				{% endfor %}
+                <!--
+				<h2>Collections</h2>
+				!-->
             </div>
             {% endblock %}
         </div>

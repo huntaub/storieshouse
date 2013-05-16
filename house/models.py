@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
 
+class Collection(models.Model):
+	name = models.CharField(max_length = 255)
+	stories = models.ManyToManyField('Story', through='CollectionMembership')
+
+class CollectionMembership(models.Model):
+	story = models.ForeignKey('Story')
+	collection = models.ForeignKey(Collection)
+	collection_order = models.IntegerField()
+
 class Category(models.Model):
 	name = models.CharField(max_length = 15)
 	html_class = models.CharField(max_length = 15)
