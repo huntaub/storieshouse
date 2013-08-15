@@ -44,7 +44,7 @@ class HomePage(ListView):
         top.viewcount += 1
         top.save()
         return stories
-	
+    
     def get_context_data(self, **kwargs):
         context = super(HomePage, self).get_context_data(**kwargs)
         context['podcast_list'] = Episode.objects.all()
@@ -81,6 +81,12 @@ class StoryDelete(DeleteView):
 
 class StoryView(DetailView):
     model = Story
+
+    def get_template_names(self):
+        if not self.object.image:
+            return 'house/story_old.html'
+        else:
+            return 'house/story_detail.html'
 
     def get_object(self):
         user = User.objects.get(username=self.kwargs['user'])

@@ -67,7 +67,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/Users/hunter/Documents/Development/Python/storieshouse/storieshouse/static',
+    '/Users/hunter/Documents/Projects/StoriesHouse/storieshouse/storieshouse/static',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -107,7 +107,7 @@ ROOT_URLCONF = 'storieshouse.urls'
 WSGI_APPLICATION = 'storieshouse.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/Users/hunter/Documents/Development/Python/storieshouse/storieshouse/templates'
+    '/Users/hunter/Documents/Projects/StoriesHouse/storieshouse/storieshouse/templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

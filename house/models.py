@@ -7,6 +7,11 @@ class Collection(models.Model):
 	name = models.CharField(max_length = 255)
 	stories = models.ManyToManyField('Story', through='CollectionMembership')
 
+	image = models.URLField()
+
+	def __unicode__(self):
+		return self.name
+
 class CollectionMembership(models.Model):
 	story = models.ForeignKey('Story')
 	collection = models.ForeignKey(Collection)
@@ -23,6 +28,8 @@ class Category(models.Model):
 class StoryAuthor(models.Model):
 	user = models.ForeignKey(User)
 	about = models.TextField()
+
+	avatar = models.URLField()
 
 	def __unicode__(self):
 		return "StoryAuthor: %s" % self.user.username
@@ -62,6 +69,7 @@ class Story(models.Model):
 	title = models.TextField()
 	body = models.TextField()
 	icon = models.CharField(max_length = 30, choices = ICON_CHOICES, blank = True, null = True)
+	image = models.URLField(blank = True, null = True)
 	user = models.ForeignKey(User)
 	category = models.ForeignKey(Category)
 	published = models.BooleanField()
