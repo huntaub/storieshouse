@@ -3,6 +3,7 @@ from django import forms
 from house.models import *
 from podcast.models import *
 from django.views.generic.detail import DetailView
+from django.views.generic import TemplateView
 from django.forms.widgets import TextInput, Textarea
 from django.db.models import Q
 from django.core.urlresolvers import reverse
@@ -25,6 +26,46 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.http import HttpResponseRedirect
 
+class HomePage(TemplateView):
+    template_name = 'base.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(HomePage, self).get_context_data(**kwargs)
+        context['media_list'] = Episode.objects.order_by("-date_published")
+        context['featured_stories'] = Story.objects.filter(published=True).order_by("-date_added")[:2]
+        context['all_stories'] = Story.objects.filter(published=True).order_by("-date_added")[2:]
+        return context
+
+class Dashboard(TemplateView):
+    template_name = 'house/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(Dashboard, self).get_context_data(**kwargs)
+        context['stories'] = Story.objects.filter(user=self.request.user).order_by("-date_added")
+        return context
+
+class StoryView(DetailView):
+    model = Story
+    template_name = 'house/story_detail.html'
+
+    # def get_template_names(self):
+    #     if not self.object.image:
+    #         return 'house/story_old.html'
+    #     else:
+    #         return 'house/story_detail.html'
+
+    def get_object(self):
+        user = User.objects.get(username=self.kwargs['user'])
+        current_user = self.request.user
+        if current_user.is_authenticated():
+            current_user = current_user.pk
+        else:
+            current_user = 0
+        story = Story.objects.get(Q(slug = self.kwargs['slug'], user=user.pk), Q(published=True) | Q(published=False, user=current_user))
+        story.viewcount += 1
+        story.save()
+        return story
+
 class StoryList(ListView):
     template_name = "story_list.html"
 
@@ -33,22 +74,6 @@ class StoryList(ListView):
             return Story.objects.all()
         else:
             return Story.objects.filter(user = self.request.user)
-
-class HomePage(ListView):
-    template_name = 'base.html'
-    model = Story
-
-    def get_queryset(self):
-        stories = Story.objects.filter(published = True)[:5]
-        top = stories[0]
-        top.viewcount += 1
-        top.save()
-        return stories
-    
-    def get_context_data(self, **kwargs):
-        context = super(HomePage, self).get_context_data(**kwargs)
-        context['podcast_list'] = Episode.objects.all()
-        return context
 
 class StoryCreate(CreateView):
     model = Story
@@ -78,35 +103,13 @@ class StoryDelete(DeleteView):
     model = Story
     success_url = '/story/'
 
-
-class StoryView(DetailView):
-    model = Story
-
-    def get_template_names(self):
-        if not self.object.image:
-            return 'house/story_old.html'
-        else:
-            return 'house/story_detail.html'
-
-    def get_object(self):
-        user = User.objects.get(username=self.kwargs['user'])
-        current_user = self.request.user
-        if current_user.is_authenticated():
-            current_user = current_user.pk
-        else:
-            current_user = 0
-        story = Story.objects.get(Q(slug = self.kwargs['slug'], user=user.pk), Q(published=True) | Q(published=False, user=current_user))
-        story.viewcount += 1
-        story.save()
-        return story
-
 class UserStoryView(DetailView):
     model = User
 
     def get_context_data(self, **kwargs):
         kwargs['stories'] = self.object.story_set.filter(published=True)
         kwargs['profile'] = StoryAuthor.find(self.object)
-        kwargs['top_story'] = self.object.story_set.filter(published=True).order_by('-viewcount')[0]
+        kwargs['top_stories'] = self.object.story_set.filter(published=True).order_by('-viewcount')[0:3]
         return super(UserStoryView, self).get_context_data(**kwargs)
 
     def get_object(self):

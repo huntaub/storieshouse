@@ -1,171 +1,176 @@
-{% load markup %}
 {% load house_extras %}
+
+<!--  <div class="subnav" style="margin-top: 50px">
+	<div class="container">
+		<ul class="nav nav-pills" style="margin-bottom: 0px">
+			<li class="news"><a href="/category/news/">News</a></li>
+			<li class="fiction"><a href="/category/fiction/">Fiction</a></li>
+			<li class="analysis"><a href="/category/analysis/">Analysis</a></li>
+			<li class="humor"><a href="/category/humor/">Humor</a></li>
+			<li class="thoughts"><a href="/category/thoughts/">Thoughts</a></li>
+			<li class="anecdote"><a href="/category/anecdote/">Anecdote</a></li>
+		</ul>
+	</div>
+</div> -->
+
 <!DOCTYPE html>
-<html>
-<head>
-    <title>StoriesHouse{% block title_bar %}{% endblock %}</title>
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <link href="/static/css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/font-awesome.css">
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,400italic' rel='stylesheet' type='text/css'>
-</head>
-<body>
-    <header>
-        <a href="/" id="logo">
-            <i class="icon-home"></i>
-            <h1>stories<span>house</span></h1>
-        </a>
-        <div class="navigation pull-right">
-            <div class="triangle-topleft pull-left"></div>
-            <ul class="shnav nav nav-pills">
-                <li {% block home_active %}class="active"{% endblock %}><a href="/">Home</a></li>
-                {% if request.user.is_authenticated %}
-                <li {% block write_active %}{% endblock %}><a href="/write/">Write</a></li>
-                <li {% block draft_active %}{% endblock %}>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Drafts <b class="caret"></b></a>
-                    <ul class="dropdown-menu pull-right" id="draftDrop">
-                        {% for draft in request.user|drafts %}
-                        <li><a href="{% url story_update draft.id %}">{{ draft.title }}</a></li>
-                        {% empty %}
-                        <li><a href="#">No Current Drafts</a></li>
-                        {% endfor %}
-                        <li class="divider"></li>
-                        <li><a href="{% url story_list %}">See All Writings</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="/account/">Edit Account</a></li>
-                        <li><a href="/change_password/">Change Password</a></li>
-                        <li><a href="/logout/">Logout</a></li>
-                    </ul>
-                </li>
-                {% else %}
-                <li><a href="#login" data-toggle="modal">Login</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </header>
-    <div class="sidebar pull-left">
-        <div class="triangle-topleft"></div>
-        <br class="spacer"/>
-        {% block shard %}
-        <a href="{% firstof object_list.0.category|cat_url object.category|cat_url %}" class="shard_link">
-            <div class="shard">
-                <div class="shape {% firstof object_list.0.category.html_class object.category.html_class %}"></div>
-                <h4>{% firstof object_list.0.category.name object.category.name %}</h4>
-            </div>
-        </a>
-        {% endblock %}
-    </div>
-    {% block shard_header %}{% endblock %}
-    <div class="container">
-        <div class="row">
-            {% block content %}
-            <div class="span6 featured">
-                <h2>Featured Story</h2>
-                <i class="icon-{{ object_list.0.icon }} large-icon pull-left" style="margin-right: 0px;"></i>
-                <h3><a href="{% url story_view slug=object_list.0.slug user=object_list.0.user.username %}">{{ object_list.0.title }}</a></h3>
-                <h5>posted by <a href="{% url user_view object_list.0.user %}">{{ object_list.0.user|full_name }}</a></h5>
-                <h5>{{ object_list.0.date_added|timesince }} ago</h5>
-                <br/>
-                {% story_render object_list.0 %}
-            </div>
-            <div class="span4 sidebar">
-                <h2>The Latest</h2>
-				<h6><a href="/feeds/latest/">feed</a></h6>
-				<hr/>
-                {% for object in object_list %}
-                    {% if not forloop.first %}
-                        <div class="row story">
-                            <div class="span1"><h1>{{ forloop.counter }}</h1></div>
-                            <div class="span3">
-                                <!-- Story Header -->
-                                <h5><i class="icon-none"></i> <a href="{% url story_view slug=object.slug user=object.user.username %}">{{ object.title }}</a></h5>
-                                <div class="row story-meta">
-                                    <!-- Metadata -->
-                                    <div class="span3">
-                                        <p>{{ object.body|wordcount }} words by <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a> on {{ object.date_added|date:"F d" }}</p>
-                                        <p>posted in <a href="{{ object.category|cat_url }}">{{ object.category.name }}</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr/>
-                    {% endif %}
-                {% endfor %}
-                <!-- <div class="row">
-                    <div class="span4 right-align">
-                        <a class="btn btn-mini right-align">See All Stories</a>
-                    </div>
-                </div> !-->
-				<br/>
-				<h2>StoriesTime</h2>
-				<h6><a href="https://itunes.apple.com/us/podcast/storiestime/id649217761">subscribe in itunes</a> &middot; <a href="/podcast/storiestime/feed">feed</a></h6>
-				<hr/>
-				{% for object in podcast_list %}
-				<div class="row story">
-					<div class="span1"><h1>{{ forloop.counter }}</h1></div>
-					<div class="span3">
-						<!-- Story Header -->
-						<h5><i class="icon-none"></i> <a href="#">{{ object.name }}</a></h5>
-						<div class="row story-meta">
-							<!-- Metadata -->
-							<div class="span3">
-								<p>Recorded On {{ object.data_published|date:"F d" }}</p>
-								<audio controls>
-									<source src="{{ object.audio }}">
-									Your browser does not support this.
-								</audio>
+<html lang="en">
+	<head>
+		<title>StoriesHouse{% block title %}{% endblock %}</title>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+		<link href="/static/css/styles.css" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	</head>
+	<body class="body">
+		<nav class="storieshouse navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-sh1-collapse">
+						<span class="sr-only">Toggle Navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/"><span class="accent"><i class="icon-home"></i> Stories</span>House</a>
+				</div>
+				<div class="collapse navbar-collapse navbar-sh1-collapse">
+					<ul class="nav navbar-nav">
+						<li class="{% block home_active %}active{% endblock %}"><a href="/">Home</a></li>
+						<li class="{% block stories_active %}{% endblock %}"><a href="/stories">Stories</a></li>
+						<li class="{% block media_active %}{% endblock %}"><a href="/media">Media</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						{% if request.user.is_authenticated %}
+							{% if request.user.is_staff %}
+							<li><a href="/admin/">Admin</a></li>
+							{% endif %}
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="/write"><i class="icon-edit"></i> Quick Write</a></li>
+									<li><a href="{% url user_view request.user %}"><i class="icon-user"></i> Profile</a></li>
+									<li><a href="/dashboard"><i class="icon-dashboard"></i> Dashboard</a></li>
+									<li><a href="/account"><i class="icon-gears"></i> Preferences</a></li>
+								</ul>
+							</li>
+							<li class=""><a href="/logout">Logout</a></li>
+						{% else %}
+							<li class="{% block register_active %}{% endblock %}"><a href="/register">Become a Writer</a></li>
+							<li class="{% block login_active %}{% endblock %}"><a href="/login">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+		{% block content %}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<h5>Featured Stories</h5>
+					<div class="row">
+						{% for s in featured_stories %}
+							<div class="col-md-6">
+								<div class="story panel panel-default" style="">
+									{% if s.image %}
+										<img src="{{ s.image }}" class="img-responsive">
+									{% elif s.icon %}
+										<div class="story-no-image">
+											<p class="center"><i class="icon-{{ s.icon }}"></i></p>
+										</div>
+									{% else %}
+										<img src="https://s3.amazonaws.com/storiestime/sh-default.png" class="img-responsive">
+									{% endif %}
+									<div class="story-inner">
+										<h3><a href="{{ s.get_absolute_url }}">{{ s.title }}</a></h3>
+										<p class="byline">by <a href="{% url user_view s.user %}">{{ s.user|full_name }}</a></p>
+									</div>
+								</div>
 							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h5>Media</h5>
+					<div class="row">
+						<div class="col-md-12">
+							<a href="#">
+								<div class="story panel panel-default" style="">
+									<img src="http://31.media.tumblr.com/5b5ae35c4f88d4b80aeb21e36263c6e6/tumblr_mtw7mhZsCe1st5lhmo1_1280.jpg" class="img-responsive">
+									<div class="story-inner">
+										<h3><i class="icon-play-circle icon-muted"></i> Episode 4: A New Hope</h3>
+										<p class="byline">from <a href="#">Sitcomology</a></p>
+									</div>
+								</div>
+							</a>
 						</div>
 					</div>
 				</div>
-				<hr/>
-				{% endfor %}
-                <!--
-				<h2>Collections</h2>
-				!-->
-            </div>
-            {% endblock %}
-        </div>
-        <div class="modal hide fade" id="login">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Login to StoriesHouse</h3>
-            </div>
-            <form method="post" action="/login/" style="margin-bottom: 0;">
-                {% csrf_token %}
-                <div class="modal-body">
-                    <input type="text" name="username" placeholder="Username..."/><br/>
-                    <input type="password" name="password" placeholder="Password..."/>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn" data-dismiss="modal">Close</a>
-                    <input type="submit" value="Login" class="btn btn-success"/>
-                </div>
-            </form>
-        </div>
-    </div>
-        <div class="footer row">
-            <div class="span4 offset2">
-                <h2><i class="icon-home"></i> storieshouse</h2>
-                <p>A collection of stories gathered from people with all different kinds of life experiences. Our well-vetted authors post expert commentary on the world around them.</p>
-                <!--<p>If you think you have what it takes to write for us, sign up below.</p>
-                <p style="text-align: center;"><a href="/sign_up" class="btn btn-large">Sign Up</a></p>!-->
-                <br/>
-            </div>
-            <div class="span4 offset1">
-                <h4>Categories</h4>
-                <ul class="nav nav-tabs nav-stacked">
-                    {% category_nav %}
-                </ul>
-            </div>
-        </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="/static/js/masonry.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/app.js"></script>
-</body>
+			</div>
+			<hr/>
+			<div class="row">
+				<div class="col-md-4">
+					<h1 style="margin-top: 55px; margin-bottom: 0;">The Count<span class="muted">down</span></h1>
+					<p style="margin-top: 0;">this week</p>
+				</div>
+				<div class="col-md-3">
+					<h5>Top Authors</h5>
+					<p><span class="muted">1.</span> <a href="#">Nick Suss</a></p>
+					<p><span class="muted">2.</span> <a href="#">Tyler Stern</a></p>
+					<p><span class="muted">3.</span> <a href="#">Sabrina Hand</a></p>
+					<p><a href="#">See More &rarr;</a></p>
+				</div>
+				<div class="col-md-3">
+					<h5>Top Stories</h5>
+					<p><span class="muted">1.</span> <a href="#">Nick Suss</a></p>
+					<p><span class="muted">2.</span> <a href="#">Tyler Stern</a></p>
+					<p><span class="muted">3.</span> <a href="#">Sabrina Hand</a></p>
+					<p><a href="#">See More &rarr;</a></p>
+				</div>
+				<div class="col-md-2">
+					<h5>Top Shows</h5>
+					<p><span class="muted">1.</span> <a href="#">Sitcomology</a></p>
+					<p><span class="muted">2.</span> <a href="#">StoriesTime</a></p>
+					<p><a href="#">See More &rarr;</a></p>
+				</div>
+			</div>
+			<hr/>
+			<div class="row">
+				<div class="col-md-8">
+					{% horizontal_stories all_stories %}
+				</div>
+				<div class="col-md-4">
+					{% if request.user.is_authenticated %}
+					<a href="/dashboard" class="btn btn-primary btn-lg btn-block">Go to My Dashboard</a>
+					{% else %}
+					<a href="/register" class="btn btn-danger btn-lg btn-block">Join Us</a>
+					<!-- <button type="button" href="/advertise" class="btn btn-default btn-lg btn-block">Advertise Here</a> -->
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+		<div class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<h2>About StoriesHouse</h2>
+						<p>A collection of stories gathered from people with all different kinds of life experiences. Our well-vetted authors post expert commentary on the world around them.</p>
+					</div>
+					<div class="col-md-4">
+						<p class="center" style="font-size: 160px;"><i class="icon-home"></i></p>
+					</div>
+					<div class="col-md-4">
+						<h5>Currently Servicing</h5>
+						<p><span class="text-2x">{% total_users %}</span> <span class="muted">users</span></p>
+						<p><span class="text-2x">{% total_stories %}</span> <span class="muted">stories</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="/static/js/app.js"></script>
+	</body>
 </html>

@@ -1,0 +1,31 @@
+{% load house_extras %}
+
+{% for s in stories %}
+	<div class="panel story story-horizontal">
+		<div class="row">
+			<div class="col-md-4">
+				{% if s.image %}
+					<img src="{{ s.image }}" class="img-responsive">
+				{% elif s.icon %}
+				<div class="story-no-image">
+					<p><i class="icon-{{ s.icon }}"></i></p>
+				</div>
+				{% else %}
+					<img src="https://s3.amazonaws.com/storiestime/sh-default.png" class="img-responsive">
+				{% endif %}
+			</div>
+			<div class="col-md-8">
+				<h3><a href="{{ s.get_absolute_url }}">{{ s.title }}</a></h3>
+				<p>by <a href="{% url user_view s.user %}">{{ s.user|full_name }}</a></p>
+				<!-- <p>in <a href="#">ANECDOTE</a></p> -->
+			</div>
+		</div>
+		{% if user %}
+			{% if user == s.user %}
+			<div class="panel-footer">
+				<p>Hello there.</p>
+			</div>
+			{% endif %}
+		{% endif %}
+	</div>
+{% endfor %}

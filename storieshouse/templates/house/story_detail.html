@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load markup %}
+{% load house_extras %}
+
+{% block title %}: {{ object.title }}{% endblock %}
+{% block home_active %}{% endblock %}
+
+{% block content %}
+	<!--[if gte IE 9]>
+	<style type="text/css">
+	.gradient {
+		filter: none;
+	}
+	</style>
+	<![endif]-->
+	{% if object.image %}
+	<div class="story-image" style="background-image: url('{{ object.image }}')">
+		<div class="story-image-lighter gradient"></div>
+		<div class="container story-header">
+			<h1>{{ object.title }}</h1>
+			<p>from <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a></p>
+		</div>
+	</div>
+	{% endif %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-1 story-display">
+				<div class="story-header">
+					{% if object.image %}
+					{% elif object.icon %}
+						<div class="row story-header-icon">
+							<div class="col-md-3">
+								<p class="center"><i class="icon-{{ object.icon }}"></i></p>
+							</div>
+							<div class="col-md-9">
+								<h1>{{ object.title }}</h1>
+								<p>from <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a></p>
+							</div>
+						</div>
+					{% else %}
+						<h1>{{ object.title }}</h1>
+						<p>from <a href="{% url user_view object.user %}">Hunter Leath</a></p>
+						<hr/>
+					{% endif %}
+				</div>
+				{{ story.body|markdown }}
+				<div class="story-comments">
+				<hr/>
+				<h2>Comments</h2>
+				</div>
+			</div>
+			<div class="col-md-offset-1 col-md-3">
+				{% if request.user == object.user %}
+					<div class="panel panel-default">
+						<div class="panel-heading">Author</div>
+						<div class="panel-body">
+							<button class="btn btn-link btn-block">Edit this Story</button>
+							{% if story.published %}
+								<button class="btn btn-warning btn-block">Unpublish</button>
+							{% else %}
+								<button class="btn btn-warning btn-block">Publish</button>
+							{% endif %}
+							<button class="btn btn-danger btn-block">Delete Story</button>
+						</div>
+					</div>
+				{% endif %}
+				<div class="panel panel-default">
+					<div class="panel-heading">Stats</div>
+					<div class="panel-body">
+						<p><span class="text-2x">{{ object.viewcount }}</span> <span class="muted">views</span></p>
+						<p><span class="text-2x">{{ object.body|wordcount }}</span> <span class="muted">words</span></p>
+						<p><span class="text-2x">{{ object.body|reading_time }}</span> <span class="muted">minutes</span></p>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">Tools</div>
+					<div class="panel-body">
+						<button class="btn btn-inverse btn-block btn-invert-story">Dim Page</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

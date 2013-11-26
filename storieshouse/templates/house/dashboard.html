@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load house_extras %}
+
+{% block title %} :: Dashboard {% endblock %}
+{% block home_active %}{% endblock %}
+
+{% block content %}
+<div class="container">
+	<h1><span class="muted">Welcome,</span> {{ request.user.first_name }}</h1>
+	<h6>You are the most read author this week.</h6>
+	<div class="navigation">
+		<a href="/write" class="btn btn-danger">Write</a>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="col-md-8">
+			{% horizontal_stories stories request.user %}
+		</div>
+	</div>
+</div>
+{% endblock %}

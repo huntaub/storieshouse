@@ -1,5 +1,6 @@
 from django import template
 from house.models import *
+from django.template.defaultfilters import wordcount
 
 register = template.Library()
 
@@ -10,6 +11,10 @@ def full_name(object):
 @register.filter
 def drafts(object):
 	return Story.objects.filter(published = False, user = object)
+
+@register.filter
+def reading_time(object):
+	return wordcount(object)/250
 
 @register.simple_tag
 def total_users():
@@ -38,9 +43,9 @@ def cat_url(object):
 	else:
 		return ("/category/" + object.name.lower())
 
-@register.inclusion_tag('grid.html')
-def story_grid(story_list):
-	return {'stories': story_list}
+@register.inclusion_tag('house/list_horizontal_stories.html')
+def horizontal_stories(story_list, user=None):
+	return {'stories': story_list, 'user': user}
 
 @register.inclusion_tag('story_render.html')
 def story_render(story):

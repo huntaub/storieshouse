@@ -6,16 +6,10 @@
 
 {% block shard %}{% endblock %}
 
-{% block shard_header %}
-	<div class="row full_title {{ object.html_class }}">
-		<div class="span4 text">
-			<h1>{{ object.name }}</h1>
-		</div>
-	</div>
-{% endblock %}
 
 {% block content %}
 <div class="span10">
+	<h1>{{ object.name }}</h1>
 	<div class="row">
 		<div class="span10">
 			<h3>{{ object.description }}</h3>
