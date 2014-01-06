@@ -100,10 +100,10 @@
 					<div class="row">
 						<div class="col-md-12">
 								<div class="story panel panel-default" style="">
-									<img src="https://storiestime.s3.amazonaws.com/sitcomology-header.png" class="img-responsive">
+									<img src="{{ featured_episode.podcast.image }}" class="img-responsive">
 									<div class="story-inner">
-										<h3><a href="https://dl-web.dropbox.com/get/StoriesHouse/Media/Sitcomology%201%20-%20Protaganists.mp3?w=AABMfmHDRui5Q4YSHPgITQnsVLmCyy_p_A4KanRDfhlNjg"><i class="fa fa-play-circle fa fa-muted"></i> Episode 1: Protagonists</a></h3>
-										<p class="byline">from <a href="#">Sitcomology</a></p>
+										<h3><i class="fa fa-play-circle fa muted"></i> <a href="{% url view_episode featured_episode.podcast.slug featured_episode.number %}">{{ featured_episode.name }}</a></h3>
+										<p class="byline">Episode {{ featured_episode.number }} from <a href="{% url view_podcast featured_episode.podcast.slug %}">{{ featured_episode.podcast.name }}</a></p>
 									</div>
 								</div>
 							</a>

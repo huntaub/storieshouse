@@ -4,6 +4,9 @@ from django.db import models
 class Podcast(models.Model):
 	name = models.CharField(max_length=255)
 	image = models.URLField()
+	schedule = models.CharField(max_length=255)
+	description = models.TextField()
+	slug = models.CharField(max_length=255)
 
 	def __unicode__(self):
 		return self.name
@@ -11,7 +14,7 @@ class Podcast(models.Model):
 class Episode(models.Model):
 	name = models.CharField(max_length=255)
 	number = models.IntegerField()
-	show_notes = models.TextField()
+	show_notes = models.TextField(null=True, blank=True)
 	audio = models.URLField()
 	podcast = models.ForeignKey(Podcast)
 	data_published = models.DateTimeField(auto_now_add=True)

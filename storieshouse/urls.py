@@ -18,7 +18,11 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^media/', include('podcast.urls')),
+
+    # Podcast URLs
+    url(r'^podcast/', include('podcast.urls')),
+
+    # Story URLs
     url(r'^', include('house.urls')),
 )
 
