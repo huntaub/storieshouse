@@ -33,7 +33,7 @@ class HomePage(TemplateView):
         context = super(HomePage, self).get_context_data(**kwargs)
         context['media_list'] = Episode.objects.order_by("-date_published")
         context['featured_stories'] = Story.objects.filter(published=True).order_by("-date_added")[:2]
-        context['all_stories'] = Story.objects.filter(published=True).order_by("-date_added")[2:]
+        context['all_stories'] = Story.objects.filter(published=True).order_by("-date_added")[2:7]
         return context
 
 class StoryView(DetailView):
