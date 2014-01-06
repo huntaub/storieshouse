@@ -1,0 +1,18 @@
+{% extends 'house_admin/layout.html' %}
+
+{% block title_bar %}: Account{% endblock %}
+{% block account_active %}active{% endblock %}
+
+{% block admin_title %}
+	{{ object.user.first_name }}'s <span class="muted">information</span>
+{% endblock %}	
+
+{% block admin_content %}
+<br/>
+<form action="{{ request.path }}" method="POST">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Save" class="btn btn-primary"/>
+	<a href="/change_password/" class="btn btn-danger">Change Password</a>
+</form>
+{% endblock %}

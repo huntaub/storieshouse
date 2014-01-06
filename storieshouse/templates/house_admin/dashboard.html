@@ -7,7 +7,7 @@
 
 {% block admin_content %}
 <div class="actions">
-	<a href="#" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Create Story</a>
+	<a href="{% url story_add %}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Create Story</a>
 	<a href="#" class="btn btn-default btn-sm"><i class="fa fa-gears"></i> Account Settings</a>
 	<a href="#" class="btn btn-danger btn-sm" onclick="alert('Haha. Not going to happen.');"><i class="fa fa-envelope"></i> Complain to Hunter</a>
 </div>

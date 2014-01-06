@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'house_admin/layout.html' %}
 
 {% block title_bar %}: Write{% endblock %}
-{% block home_active %}{% endblock %}
-{% block write_active %}class="active"{% endblock %}
-{% block shard %}{% endblock %}
+{% block articles_active %}active{% endblock %}
 
-{% block content %}
+{% block admin_title %}New Story{% endblock %}
+
+{% block admin_content %}
 <div class="span8">
 <br/>
 <form action="{{ request.path }}" method="POST">

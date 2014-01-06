@@ -67,6 +67,7 @@ class StoryList(ListView):
 class StoryCreate(CreateView):
     model = Story
     form_class = StoryForm
+    template_name = "house_admin/story_form.html"
 
     def form_valid(self, form):
         s = Story()
@@ -109,6 +110,7 @@ class AuthorUpdate(UpdateView):
     model = StoryAuthor
     form_class = StoryAuthorForm
     success_url = "/"
+    template_name = "house_admin/storyauthor_form.html"
 
     def get_object(self):
         return StoryAuthor.find(self.request.user)
@@ -123,19 +125,3 @@ class CategoryView(DetailView):
     def get_object(self):
         self.object = Category.objects.get(name__iexact=self.kwargs['name'])
         return self.object
-
-from django.contrib.syndication.views import Feed
-
-class LatestEntriesFeed(Feed):
-    title = "Latest Entries from StoriesHouse.com"
-    link = "http://storieshouse.com/"
-    description = "We are a group of authors who are looking to share our perspective on the world."
-
-    def items(self):
-        return Story.objects.filter(published=True).order_by("-date_added")[:10]
-
-    def item_title(self, item):
-        return item.title
-
-    def item_description(self, item):
-        return item.body
