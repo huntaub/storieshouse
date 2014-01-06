@@ -6,12 +6,12 @@ body {
 	position: relative;
 }
 .story img {
-	border-top-left-radius:3px;
-	border-top-right-radius:3px;
+	/*border-top-left-radius:3px;*/
+	/*border-top-right-radius:3px;*/
 }
 .story.story-horizontal img {
-	border-top-right-radius: 0;
-	border-bottom-left-radius: 3px;
+	/*border-top-right-radius: 0;*/
+	/*border-bottom-left-radius: 3px;*/
 }
 .story .story-inner {
 	margin: 10px;
@@ -24,6 +24,7 @@ body {
 .text-2x{font-size: 200%;}
 .muted{color: #777;}
 .accent{color: #AF0014;}
+.navbar-brand .accent, .sidebar-brand .accent { color: #E2001A; }
 hr{border-color: #d8d8d8;}
 .story-no-image {
 	width: 100%; /*whatever width you want*/

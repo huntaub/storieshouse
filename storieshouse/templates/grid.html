@@ -1,7 +1,7 @@
 <div class="row"><div class="span10 story-grid">
 	{% for story in stories %}
 	<a href="{% url story_view slug=story.slug user=story.user.username %}" class="grid-block"><div class="story-block">
-		<i class="icon-{% firstof story.icon "align-left" %} large-icon"></i>	
+		<i class="fa fa-{% firstof story.icon "align-left" %} large-icon"></i>	
 		<p>{{ story.title }}</p>
 	</div></a>
 	{% endfor %}

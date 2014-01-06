@@ -1,0 +1,92 @@
+{% extends "house_admin/layout.html" %}
+
+{% block title %} :: Dashboard {% endblock %}
+{% block dash_active %}active{% endblock %}
+
+{% block admin_title %}Dashboard{% endblock %}
+
+{% block admin_content %}
+<div class="actions">
+	<a href="#" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Create Story</a>
+	<a href="#" class="btn btn-default btn-sm"><i class="fa fa-gears"></i> Account Settings</a>
+	<a href="#" class="btn btn-danger btn-sm" onclick="alert('Haha. Not going to happen.');"><i class="fa fa-envelope"></i> Complain to Hunter</a>
+</div>
+<br/>
+<div class="row">
+	<div class="col-sm-4">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				Total Views
+			</div>
+			<div class="panel-body text-center stat">
+				<span>100,000</span>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				Total Stories
+			</div>
+			<div class="panel-body text-center stat">
+				<span>450</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-8">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				This Week's Views
+			</div>
+			<div class="panel-body text-center graph">
+				<div id="graph-views-axis" class="y-axis"></div>
+				<div id="graph-views"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-8">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				Top Stories (by views this week)
+			</div>
+			<div class="panel-body stat">
+				<ol>
+					<li><a href="#">Football Calculus Part 5</a> <span class="text-muted">(650 views)</span></li>
+					<li><a href="#">I Once Ate a Cheeseburger</a> <span class="text-muted">(650 views)</span></li>
+					<li><a href="#">This is a Shitty Life</a> <span class="text-muted">(650 views)</span></li>
+					<li><a href="#">Why do I do free webdesign work?</a> <span class="text-muted">(650 views)</span></li>
+					<li><a href="#">Why do I have friends?</a> <span class="text-muted">(650 views)</span></li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block admin_js %}
+
+
+<script>
+createGraph("#graph-views", 
+	[ 
+		{ x: -7, y: 50 }, 
+		{ x: -6, y: 30 }, 
+		{ x: -5, y: 30 }, 
+		{ x: -4, y: 30 }, 
+		{ x: -3, y: 30 }, 
+		{ x: -2, y: 30 }, 
+		{ x: -1, y: 32 },
+		{ x: 0, y: 32 }
+	],
+	[
+		{ x: -7, y: 15 }, 
+		{ x: -6, y: 5 }, 
+		{ x: -5, y: 10 }, 
+		{ x: -4, y: 20 }, 
+		{ x: -3, y: 0 }, 
+		{ x: -2, y: 7 }, 
+		{ x: -1, y: 12 },
+		{ x: 0, y: 0 }
+	]);
+</script> 
+{% endblock %}

@@ -36,14 +36,6 @@ class HomePage(TemplateView):
         context['all_stories'] = Story.objects.filter(published=True).order_by("-date_added")[2:]
         return context
 
-class Dashboard(TemplateView):
-    template_name = 'house/dashboard.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(Dashboard, self).get_context_data(**kwargs)
-        context['stories'] = Story.objects.filter(user=self.request.user).order_by("-date_added")
-        return context
-
 class StoryView(DetailView):
     model = Story
     template_name = 'house/story_detail.html'

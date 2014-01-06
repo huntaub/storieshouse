@@ -17,29 +17,32 @@
 <html lang="en">
 	<head>
 		<title>StoriesHouse{% block title %}{% endblock %}</title>
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+		<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet"> -->
+		<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.3/yeti/bootstrap.min.css" rel="stylesheet">
 		<link href="/static/css/styles.css" rel="stylesheet">
+		{% block css_extras %}{% endblock %}
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	</head>
 	<body class="body">
+		{% block navigation %}
 		<nav class="storieshouse navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-sh1-collapse">
 						<span class="sr-only">Toggle Navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+						<span class="fa fa-bar"></span>
+						<span class="fa fa-bar"></span>
+						<span class="fa fa-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/"><span class="accent"><i class="icon-home"></i> Stories</span>House</a>
+					<a class="navbar-brand" href="/"><span class="accent"><i class="fa fa-home"></i> Stories</span>House</a>
 				</div>
 				<div class="collapse navbar-collapse navbar-sh1-collapse">
 					<ul class="nav navbar-nav">
 						<li class="{% block home_active %}active{% endblock %}"><a href="/">Home</a></li>
 						<li class="{% block stories_active %}{% endblock %}"><a href="/stories">Stories</a></li>
-						<li class="{% block media_active %}{% endblock %}"><a href="/media">Media</a></li>
+						<!-- <li class="{% block media_active %}{% endblock %}"><a href="/media">Media</a></li> -->
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						{% if request.user.is_authenticated %}
@@ -49,10 +52,10 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="/write"><i class="icon-edit"></i> Quick Write</a></li>
-									<li><a href="{% url user_view request.user %}"><i class="icon-user"></i> Profile</a></li>
-									<li><a href="/dashboard"><i class="icon-dashboard"></i> Dashboard</a></li>
-									<li><a href="/account"><i class="icon-gears"></i> Preferences</a></li>
+									<li><a href="/write"><i class="fa fa-edit"></i> Quick Write</a></li>
+									<li><a href="{% url user_view request.user %}"><i class="fa fa-user"></i> Profile</a></li>
+									<li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+									<li><a href="/account"><i class="fa fa-gears"></i> Preferences</a></li>
 								</ul>
 							</li>
 							<li class=""><a href="/logout">Logout</a></li>
@@ -64,6 +67,7 @@
 				</div>
 			</div>
 		</nav>
+		{% endblock %}
 		{% block content %}
 		<div class="container">
 			<div class="row">
@@ -77,7 +81,7 @@
 										<img src="{{ s.image }}" class="img-responsive">
 									{% elif s.icon %}
 										<div class="story-no-image">
-											<p class="center"><i class="icon-{{ s.icon }}"></i></p>
+											<p class="center"><i class="fa fa-{{ s.icon }}"></i></p>
 										</div>
 									{% else %}
 										<img src="https://s3.amazonaws.com/storiestime/sh-default.png" class="img-responsive">
@@ -92,14 +96,13 @@
 					</div>
 				</div>
 				<div class="col-md-4">
-					<h5>Media</h5>
+					<h5>Podcasts</h5>
 					<div class="row">
 						<div class="col-md-12">
-							<a href="#">
 								<div class="story panel panel-default" style="">
-									<img src="http://31.media.tumblr.com/5b5ae35c4f88d4b80aeb21e36263c6e6/tumblr_mtw7mhZsCe1st5lhmo1_1280.jpg" class="img-responsive">
+									<img src="https://storiestime.s3.amazonaws.com/sitcomology-header.png" class="img-responsive">
 									<div class="story-inner">
-										<h3><i class="icon-play-circle icon-muted"></i> Episode 4: A New Hope</h3>
+										<h3><a href="https://dl-web.dropbox.com/get/StoriesHouse/Media/Sitcomology%201%20-%20Protaganists.mp3?w=AABMfmHDRui5Q4YSHPgITQnsVLmCyy_p_A4KanRDfhlNjg"><i class="fa fa-play-circle fa fa-muted"></i> Episode 1: Protagonists</a></h3>
 										<p class="byline">from <a href="#">Sitcomology</a></p>
 									</div>
 								</div>
@@ -110,30 +113,30 @@
 			</div>
 			<hr/>
 			<div class="row">
-				<div class="col-md-4">
-					<h1 style="margin-top: 55px; margin-bottom: 0;">The Count<span class="muted">down</span></h1>
+				<div class="col-md-4 col-md-offset-1">
+					<h1 style="margin-top: 40px; margin-bottom: 0;">The Count<span class="muted">down</span></h1>
 					<p style="margin-top: 0;">this week</p>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-3 col-md-offset-1">
 					<h5>Top Authors</h5>
-					<p><span class="muted">1.</span> <a href="#">Nick Suss</a></p>
-					<p><span class="muted">2.</span> <a href="#">Tyler Stern</a></p>
-					<p><span class="muted">3.</span> <a href="#">Sabrina Hand</a></p>
-					<p><a href="#">See More &rarr;</a></p>
+					<p><span class="muted">1.</span> <a href="/nsuss">Nick Suss</a></p>
+					<p><span class="muted">2.</span> <a href="/tstern">Tyler Stern</a></p>
+					<p><span class="muted">3.</span> <a href="/abennett">Austin Bennett</a></p>
+					<!-- <p><a href="#">See More &rarr;</a></p> -->
 				</div>
 				<div class="col-md-3">
 					<h5>Top Stories</h5>
 					<p><span class="muted">1.</span> <a href="#">Nick Suss</a></p>
 					<p><span class="muted">2.</span> <a href="#">Tyler Stern</a></p>
-					<p><span class="muted">3.</span> <a href="#">Sabrina Hand</a></p>
-					<p><a href="#">See More &rarr;</a></p>
+					<p><span class="muted">3.</span> <a href="#">Austin Bennett</a></p>
+					<!-- <p><a href="#">See More &rarr;</a></p> -->
 				</div>
-				<div class="col-md-2">
+				<!-- <div class="col-md-2">
 					<h5>Top Shows</h5>
 					<p><span class="muted">1.</span> <a href="#">Sitcomology</a></p>
 					<p><span class="muted">2.</span> <a href="#">StoriesTime</a></p>
 					<p><a href="#">See More &rarr;</a></p>
-				</div>
+				</div> -->
 			</div>
 			<hr/>
 			<div class="row">
@@ -142,15 +145,16 @@
 				</div>
 				<div class="col-md-4">
 					{% if request.user.is_authenticated %}
-					<a href="/dashboard" class="btn btn-primary btn-lg btn-block">Go to My Dashboard</a>
+					<a href="/account/dashboard/" class="btn btn-primary btn-lg btn-block">Go to My Dashboard</a>
 					{% else %}
-					<a href="/register" class="btn btn-danger btn-lg btn-block">Join Us</a>
+					<!-- <a href="/register" class="btn btn-danger btn-lg btn-block">Join Us</a> -->
 					<!-- <button type="button" href="/advertise" class="btn btn-default btn-lg btn-block">Advertise Here</a> -->
 					{% endif %}
 				</div>
 			</div>
 		</div>
 		{% endblock %}
+		{% block footer %}
 		<div class="footer">
 			<div class="container">
 				<div class="row">
@@ -159,18 +163,20 @@
 						<p>A collection of stories gathered from people with all different kinds of life experiences. Our well-vetted authors post expert commentary on the world around them.</p>
 					</div>
 					<div class="col-md-4">
-						<p class="center" style="font-size: 160px;"><i class="icon-home"></i></p>
+						<p class="center" style="font-size: 160px;"><i class="fa fa-home"></i></p>
 					</div>
 					<div class="col-md-4">
-						<h5>Currently Servicing</h5>
+						<h5>Currently Housing</h5>
 						<p><span class="text-2x">{% total_users %}</span> <span class="muted">users</span></p>
 						<p><span class="text-2x">{% total_stories %}</span> <span class="muted">stories</span></p>
 					</div>
 				</div>
 			</div>
 		</div>
+		{% endblock %}
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 		<script src="/static/js/app.js"></script>
+		{% block js_extra %}{% endblock %}
 	</body>
 </html>
