@@ -62,10 +62,7 @@ class StoryList(ListView):
     template_name = "story_list.html"
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Story.objects.all()
-        else:
-            return Story.objects.filter(user = self.request.user)
+        return Story.objects.filter(published=True)
 
 class StoryCreate(CreateView):
     model = Story
