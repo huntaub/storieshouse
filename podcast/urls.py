@@ -5,7 +5,7 @@ from podcast.views import *
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'storieshouse.views.home', name='home'),
+    url(r'^$', PodcastHome.as_view(), name='podcast_home'),
 
     url(r'^storiestime/feed/$', StoriesTimeFeed()),
 

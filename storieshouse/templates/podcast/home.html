@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block home_active %}{% endblock %}
+{% block podcast_active %}active{% endblock %}
+
+{% block content %}
+<div class="container">
+	<h1>Podcast Directory</h1>
+	<br/>
+	<div class="row">
+	{% for podcast in podcasts %}
+		<div class="col-sm-6 col-md-4">
+			<div class="thumbnail">
+				<img class="image-responsive" src="{{ podcast.image }}" alt="{{ podcast.slug }}_logo">
+				<div class="caption">
+					<h4>{{ podcast.name }}</h4>
+					<p class="small muted">{{ podcast.schedule }}</p>
+					<p>{{ podcast.description }}</p>
+					<p>
+						<a href="{% url view_podcast podcast.slug %}" class="btn btn-primary btn-sm" role="button">View</a>
+						<!-- <a href="#" class="btn btn-default btn-sm" role="button">Subscribe</a> -->
+						<a href="{% url view_episode podcast.slug podcast.LatestEpisode.number %}" class="btn btn-default btn-sm" role="button">Lastest Episode</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+</div>
+{% endblock %}

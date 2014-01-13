@@ -8,6 +8,9 @@ class Podcast(models.Model):
 	description = models.TextField()
 	slug = models.CharField(max_length=255)
 
+	def LatestEpisode(self):
+		return self.episode_set.order_by('-number')[0]
+
 	def __unicode__(self):
 		return self.name
 
