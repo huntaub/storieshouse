@@ -81,7 +81,7 @@ class StoryCreate(CreateView):
         s.published = form.cleaned_data['published']
         s.icon = form.cleaned_data['icon']
         s.category = form.cleaned_data['category']
-        # s.viewcount = 0
+        s.viewcount = 0
         s.user = self.request.user
         s.save()
         return HttpResponseRedirect(reverse('story_view', kwargs={'slug':s.slug, 'user':s.user}))
