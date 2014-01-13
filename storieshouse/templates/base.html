@@ -119,17 +119,17 @@
 				</div>
 				<div class="col-md-3 col-md-offset-1">
 					<h5>Top Authors</h5>
-					<p><span class="muted">1.</span> <a href="/nsuss">Nick Suss</a></p>
-					<p><span class="muted">2.</span> <a href="/tstern">Tyler Stern</a></p>
-					<p><span class="muted">3.</span> <a href="/abennett">Austin Bennett</a></p>
+					{% for s in top_users %}
+						<p><span class="muted">{{ forloop.counter }}.</span> <a href="{% url user_view s %}">{{ s|full_name }}</a></p>
+					{% endfor %}
 					<!-- <p><a href="#">See More &rarr;</a></p> -->
 				</div>
-				<!-- <div class="col-md-3">
+				<div class="col-md-3">
 					<h5>Top Stories</h5>
-					<p><span class="muted">1.</span> <a href="#">Nick Suss</a></p>
-					<p><span class="muted">2.</span> <a href="#">Tyler Stern</a></p>
-					<p><span class="muted">3.</span> <a href="#">Austin Bennett</a></p>
-				</div> -->
+					{% for s in top_stories %}
+						<p><span class="muted">{{ forloop.counter }}.</span> <a href="{% url story_view s.user s.slug %}">{{ s.title }}</a></p>
+					{% endfor %}
+				</div>
 				<!-- <div class="col-md-2">
 					<h5>Top Shows</h5>
 					<p><span class="muted">1.</span> <a href="#">Sitcomology</a></p>

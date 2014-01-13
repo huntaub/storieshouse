@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
+from django.db.models import Count
 
 class Collection(models.Model):
 	name = models.CharField(max_length = 255)
@@ -38,6 +39,11 @@ class StoryAuthor(models.Model):
 	def find(u):
 		author, created = StoryAuthor.objects.get_or_create(user=u)
 		return author
+
+	@staticmethod
+	def top(limit, early_date):
+		h = Hit.objects.filter(date__gt=early_date).values('author').annotate(the_count=Count('author')).order_by('-the_count')[:limit]
+		return map(lambda x: User.objects.get(id=x["author"]), h)
 
 # Create your models here.
 class Story(models.Model):
@@ -87,5 +93,25 @@ class Story(models.Model):
 	def get_absolute_url(self):
 		return ("/" + self.user.username + "/" + self.slug)
 
+	def hits(self):
+		return self.hit_set.count() + self.viewcount
+
+	def register_hit(self):
+		h = Hit()
+		h.story_id = self.id
+		h.author_id = self.user.id
+		h.save()
+		return
+
 	def __unicode__(self):
 		return '%s by %s' % (self.title, self.user)
+
+	@staticmethod
+	def top(limit, early_date):
+		h = Hit.objects.filter(date__gt=early_date).values('story').annotate(the_count=Count('story')).order_by('-the_count')[:limit]
+		return map(lambda x: Story.objects.get(id=x["story"]), h)
+
+class Hit(models.Model):
+	date = models.DateTimeField(auto_now_add=True)
+	story = models.ForeignKey(Story)
+	author = models.ForeignKey(User)

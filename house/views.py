@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 from django.forms.widgets import TextInput, Textarea
 from django.db.models import Q
 from django.core.urlresolvers import reverse
+from datetime import datetime, timedelta
 
 class StoryForm(forms.ModelForm):
     title = forms.CharField(widget = TextInput(attrs = {'style': 'width: 500px'}))
@@ -34,6 +35,9 @@ class HomePage(TemplateView):
         context['featured_episode'] = Episode.objects.order_by("-data_published")[0]
         context['featured_stories'] = Story.objects.filter(published=True).order_by("-date_added")[:2]
         context['all_stories'] = Story.objects.filter(published=True).order_by("-date_added")[2:7]
+        lastweek = datetime.now() - timedelta(weeks=1)
+        context['top_users'] = StoryAuthor.top(3, lastweek)
+        context['top_stories'] = Story.top(3, lastweek)
         return context
 
 class StoryView(DetailView):
@@ -54,7 +58,8 @@ class StoryView(DetailView):
         else:
             current_user = 0
         story = Story.objects.get(Q(slug = self.kwargs['slug'], user=user.pk), Q(published=True) | Q(published=False, user=current_user))
-        story.viewcount += 1
+        # story.viewcount += 1
+        story.register_hit()
         story.save()
         return story
 
@@ -76,7 +81,7 @@ class StoryCreate(CreateView):
         s.published = form.cleaned_data['published']
         s.icon = form.cleaned_data['icon']
         s.category = form.cleaned_data['category']
-        s.viewcount = 0
+        # s.viewcount = 0
         s.user = self.request.user
         s.save()
         return HttpResponseRedirect(reverse('story_view', kwargs={'slug':s.slug, 'user':s.user}))
