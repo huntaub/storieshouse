@@ -117,14 +117,14 @@
 					<h1 style="margin-top: 40px; margin-bottom: 0;">The Count<span class="muted">down</span></h1>
 					<p style="margin-top: 0;">this week</p>
 				</div>
-				<div class="col-md-3 col-md-offset-1">
+				<div class="col-md-3">
 					<h5>Top Authors</h5>
 					{% for s in top_users %}
 						<p><span class="muted">{{ forloop.counter }}.</span> <a href="{% url user_view s %}">{{ s|full_name }}</a></p>
 					{% endfor %}
 					<!-- <p><a href="#">See More &rarr;</a></p> -->
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<h5>Top Stories</h5>
 					{% for s in top_stories %}
 						<p><span class="muted">{{ forloop.counter }}.</span> <a href="{% url story_view s.user s.slug %}">{{ s.title }}</a></p>
