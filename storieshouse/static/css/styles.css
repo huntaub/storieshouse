@@ -1,6 +1,9 @@
 body {
 	background-color: #f3f3f3;
 }
+.text-small {
+	font-size: 12px;
+}
 .story {
 	/*height: 350px;*/
 	position: relative;

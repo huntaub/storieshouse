@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from house.models import *
-from house.views import StoryForm
+from house.forms import StoryForm, StoryAuthorForm
 from datetime import datetime, timedelta
 
 class AccountDashboard(TemplateView):
@@ -26,6 +26,21 @@ class AccountStories(TemplateView):
         return context
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+
+class AuthorUpdate(UpdateView):
+    model = StoryAuthor
+    form_class = StoryAuthorForm
+    success_url = "/"
+    template_name = "house_admin/storyauthor_form.html"
+
+    def get_object(self):
+        return StoryAuthor.find(self.request.user)
+
+class StoryDelete(DeleteView):
+    model = Story
+    success_url = '/story/'
 
 class StoryCreate(CreateView):
     model = Story
@@ -38,6 +53,7 @@ class StoryCreate(CreateView):
         return context
 
     def form_valid(self, form):
+        print "valid!"
         s = Story()
         s.title = form.cleaned_data['title']
         s.body = form.cleaned_data['body']
