@@ -22,7 +22,7 @@
 	<tbody>
 	{% for x in stories %}
 	<tr>
-		<td>{{ x.title }}</td>
+		<td><a href="{% url story_edit x.id %}">{{ x.title }}</a></td>
 		<td>{{ x.date_added }}</td>
 		<td>{% if x.published %}<i class="fa fa-check"></i>{% endif %}</td>
 		<td>{{ x.hits }}</td>
