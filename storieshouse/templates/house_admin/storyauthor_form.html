@@ -9,10 +9,23 @@
 
 {% block admin_content %}
 <br/>
-<form action="{{ request.path }}" method="POST">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="Save" class="btn btn-primary"/>
-	<a href="/change_password/" class="btn btn-danger">Change Password</a>
-</form>
+<div class="row">
+	<div class="col-md-6">
+		<form action="{{ request.path }}" method="POST" role="form">
+			{% csrf_token %}
+			<div class="form-group">
+				{{ form.about.errors }}
+				<label for="id_about">About:</label>
+				{{ form.about }}
+			</div>
+			<div class="form-group">
+				{{ form.avatar.errors }}
+				<label for="id_avatar">Avatar:</label>
+				{{ form.avatar }}
+			</div>
+			<input type="submit" value="Save" class="btn btn-primary btn-sm"/>
+			<a href="/change_password/" class="btn btn-danger btn-sm">Change Password</a>
+		</form>
+	</div>
+</div>
 {% endblock %}

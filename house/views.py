@@ -17,7 +17,8 @@ class StoryForm(forms.ModelForm):
         exclude = ('user', 'date_added', 'slug', 'viewcount')
 
 class StoryAuthorForm(forms.ModelForm):
-    about = forms.CharField(widget = Textarea(attrs = {'style': 'width: 500px'}))
+    about = forms.CharField(widget = Textarea(attrs = {'class': 'form-control'}))
+    avatar = forms.CharField(widget = TextInput(attrs = {'class': 'form-control'}))
     class Meta:
         model = StoryAuthor
         exclude = ('user')
