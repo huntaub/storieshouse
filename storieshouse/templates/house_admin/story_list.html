@@ -6,12 +6,17 @@
 {% block admin_title %}Stories List{% endblock %}
 
 {% block admin_content %}
+<div class="actions">
+	<a href="{% url story_add %}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Create Story</a>
+</div>
+<br/>
 <table class="table table-bordered table-hover table-striped">
 	<thead>
 	<tr>
 		<th>Title</th>
 		<th>Posted</th>
 		<th>Published</th>
+		<th>Views</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -20,6 +25,7 @@
 		<td>{{ x.title }}</td>
 		<td>{{ x.date_added }}</td>
 		<td>{% if x.published %}<i class="fa fa-check"></i>{% endif %}</td>
+		<td>{{ x.hits }}</td>
 	</tr>
 	{% endfor %}
 	</tbody>
