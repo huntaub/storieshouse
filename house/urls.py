@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     url(r'^account/settings/$', login_required(AuthorUpdate.as_view()), name='author_update'),
     url(r'^account/dashboard/$', login_required(AccountDashboard.as_view()), name='dashboard'),
 
-    url(r'^account/stories/$', login_required(AccountDashboard.as_view()), name='admin_story_list'),
+    url(r'^account/stories/$', login_required(AccountStories.as_view()), name='admin_story_list'),
     url(r'^account/stories/write/$', login_required(StoryCreate.as_view()), name='story_add'),
     url(r'^account/stories/(?P<pk>\d+)/edit/$', login_required(AccountDashboard.as_view()), name='story_edit'),
     url(r'^account/stories/(?P<pk>\d+)/delete/$', login_required(AccountDashboard.as_view()), name='story_delete'),

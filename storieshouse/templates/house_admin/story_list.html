@@ -1,0 +1,27 @@
+{% extends "house_admin/layout.html" %}
+
+{% block title %} :: Stories {% endblock %}
+{% block articles_active %}active{% endblock %}
+
+{% block admin_title %}Stories List{% endblock %}
+
+{% block admin_content %}
+<table class="table table-bordered table-hover table-striped">
+	<thead>
+	<tr>
+		<th>Title</th>
+		<th>Posted</th>
+		<th>Published</th>
+	</tr>
+	</thead>
+	<tbody>
+	{% for x in stories %}
+	<tr>
+		<td>{{ x.title }}</td>
+		<td>{{ x.date_added }}</td>
+		<td>{% if x.published %}<i class="fa fa-check"></i>{% endif %}</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
