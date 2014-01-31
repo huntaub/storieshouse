@@ -4,17 +4,23 @@ from house.models import *
 from podcast.models import *
 from django.views.generic.detail import DetailView
 from django.views.generic import TemplateView
-from django.forms.widgets import TextInput, Textarea
+from django.forms.widgets import *
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from datetime import datetime, timedelta
 
 class StoryForm(forms.ModelForm):
-    title = forms.CharField(widget = TextInput())
-    body = forms.CharField(widget = Textarea())
+    title = forms.CharField(widget = TextInput(attrs = {'class': 'form-control'}))
+    body = forms.CharField(widget = Textarea(attrs = {'class': 'form-control'}))
     class Meta:
         model = Story
         exclude = ('user', 'date_added', 'slug', 'viewcount')
+        widgets = {
+            'icon': Select(attrs = {'class': 'form-control'}),
+            'image': TextInput(attrs = {'class': 'form-control', 'placeholder': 'Use icon for story.'}),
+            'category': Select(attrs = {'class': 'form-control'}),
+            # 'published': CheckboxInput(attrs = {'class': 'form-control'}),
+        }
 
 class StoryAuthorForm(forms.ModelForm):
     about = forms.CharField(widget = Textarea(attrs = {'class': 'form-control'}))

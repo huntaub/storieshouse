@@ -13,21 +13,20 @@
 <br/>
 
 <ul class="nav nav-tabs">
-	{% if not create %}<li class="active"><a href="#info" data-toggle="tab">Information</a></li>{% endif %}
-	<li class="{% if create %}active{% endif %}"><a href="#edit" data-toggle="tab">Editor</a></li>
+	<!-- {% if not create %}<li class="active"><a href="#info" data-toggle="tab">Information</a></li>{% endif %} -->
+	<li class="active"><a href="#edit" data-toggle="tab">Editor</a></li>
 	<li><a href="#preview" data-toggle="tab">Preview</a></li>
 </ul>
 
 <br/>
 
 <div class="tab-content">
-	<div class="tab-pane fade in active" id="info">
+	<!-- <div class="tab-pane fade in active" id="info">
 		<p>Story Added: {{ story.date_added }}</p>
 		<p>Story Hits: {{ story.hits }}</p>
-		<p><a href="{% url story_view story.user.username story.slug %}" class="btn btn-sm btn-primary">View On Site</a></p>
-		<p><a href="{% url story_view story.user.username story.slug %}" class="btn btn-sm btn-danger">Delete Story</a></p>
-	</div>
-	<div class="tab-pane fade {% if create %}in active{% endif %}" id="edit">
+		<p><a href="{% url story_view story.user.username story.slug %}">View On Site &rarr;</a></p>
+	</div> -->
+	<div class="tab-pane fade in active" id="edit">
 		<form action="{{ request.path }}" method="POST" role="form">
 			{% csrf_token %}
 			<div class="form-group">
@@ -39,32 +38,51 @@
 				{{ form.body.errors }}
 				<label for="id_body">Body:</label>
 				{{ form.body }}
+				<p class="help-block">The body of your story can include <a href="http://daringfireball.net/projects/markdown/basics">Markdown</a> syntax.</p>
 			</div>
-			<div class="form-group">
-				{{ form.icon.errors }}
-				<label for="id_icon">Icon:</label>
-				{{ form.icon }}
-			</div>
-			<div class="form-group">
-				{{ form.image.errors }}
-				<label for="id_image">Image:</label>
-				{{ form.image }}
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						{{ form.icon.errors }}
+						<label for="id_icon">Icon:</label>
+						{{ form.icon }}
+						<p class="help-block">The icon that appears next to your story's name. Using no icon will attempt to utilize the cover image, or will display the <a href="https://s3.amazonaws.com/storiestime/sh-default.png">default StoriesHouse image</a>.</p>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						{{ form.image.errors }}
+						<label for="id_image">Cover Photo URL:</label>
+						<div class="input-group">
+							{{ form.image }}
+							<span class="input-group-btn">
+								<button class="btn btn-primary">Browse...</button>
+							</span>
+						</div>
+						<p class="help-block">An image that appears at the top of your post.</p>
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
 				{{ form.category.errors }}
 				<label for="id_category">Category:</label>
 				{{ form.category }}
 			</div>
-			<div class="form-group">
+			<div class="checkbox">
 				{{ form.published.errors }}
-				<label for="id_published">Published:</label>
-				{{ form.published }}
+				<label>
+					{{ form.published }} Published
+				</label>
 			</div>
+			<hr/>
 			<div class="form-actions">
-				<input type="submit" value="Save" class="btn btn-primary"/>
+				<input type="submit" value="Save" class="btn btn-primary btn-sm"/>
+				<div class="pull-right">
+					<a href="#" class="btn btn-danger btn-sm">Delete Story</a>
+				</div>
 			</div>
 		</form>
-		<p>Remember that your body can include <a href="http://daringfireball.net/projects/markdown/basics">Markdown</a> syntax.</p>
+		<p></p>
 		</div>
 	</div>
 	<div class="tab-pane fade" id="preview">

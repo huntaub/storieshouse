@@ -32,6 +32,11 @@ class StoryCreate(CreateView):
     form_class = StoryForm
     template_name = "house_admin/story_form.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(StoryCreate, self).get_context_data(**kwargs)
+        context['create'] = True
+        return context
+
     def form_valid(self, form):
         s = Story()
         s.title = form.cleaned_data['title']
@@ -49,6 +54,11 @@ class StoryUpdate(UpdateView):
     form_class = StoryForm
     success_url = '/'
     template_name = 'house_admin/story_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(StoryUpdate, self).get_context_data(**kwargs)
+        context['create'] = False
+        return context
 
     def get_success_url(self):
         return reverse('story_view', kwargs={'slug':self.object.slug, 'user':self.object.user}) 
