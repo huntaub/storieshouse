@@ -4,6 +4,9 @@ body {
 .text-small {
 	font-size: 12px;
 }
+.story.featured {
+	min-height: 330px;
+}
 .story {
 	/*height: 350px;*/
 	position: relative;

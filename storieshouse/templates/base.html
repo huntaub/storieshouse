@@ -64,7 +64,7 @@
 					<div class="row">
 						{% for s in featured_stories %}
 							<div class="col-md-6">
-								<div class="story panel panel-default" style="">
+								<div class="story featured panel panel-default" style="">
 									{% if s.image %}
 										<img src="{{ s.image }}" class="img-responsive">
 									{% elif s.icon %}
@@ -77,6 +77,7 @@
 									<div class="story-inner">
 										<h3><a href="{{ s.get_absolute_url }}">{{ s.title }}</a></h3>
 										<p class="byline">by <a href="{% url user_view s.user %}">{{ s.user|full_name }}</a></p>
+										<p class="text-small text-muted">{{ s.date_added }}</p>
 									</div>
 								</div>
 							</div>
@@ -87,11 +88,12 @@
 					<h5>Podcasts</h5>
 					<div class="row">
 						<div class="col-md-12">
-								<div class="story panel panel-default" style="">
+								<div class="story featured panel panel-default" style="">
 									<img src="{{ featured_episode.podcast.image }}" class="img-responsive">
 									<div class="story-inner">
 										<h3><i class="fa fa-play-circle fa muted"></i> <a href="{% url view_episode featured_episode.podcast.slug featured_episode.number %}">{{ featured_episode.name }}</a></h3>
 										<p class="byline">Episode {{ featured_episode.number }} from <a href="{% url view_podcast featured_episode.podcast.slug %}">{{ featured_episode.podcast.name }}</a></p>
+										<p class="text-small text-muted">{{ featured_episode.data_published }}</p>
 									</div>
 								</div>
 							</a>

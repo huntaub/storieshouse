@@ -28,6 +28,7 @@
 			<div class="col-md-6 col-md-offset-1 story-display">
 				<div class="story-header">
 					{% if object.image %}
+						<p class="text-small text-muted">{{ object.date_added }}</p>
 					{% elif object.icon %}
 						<div class="row story-header-icon">
 							<div class="col-md-3">
@@ -36,6 +37,7 @@
 							<div class="col-md-9">
 								<h1>{{ object.title }}</h1>
 								<p>from <a href="{% url user_view object.user %}">{{ object.user|full_name }}</a></p>
+								<p class="text-small text-muted">{{ object.date_added }}</p>
 							</div>
 						</div>
 					{% else %}
