@@ -16,8 +16,7 @@
 			</div>
 			<div class="col-md-8">
 				<h3><a href="{{ s.get_absolute_url }}">{{ s.title }}</a></h3>
-				<p>by <a href="{% url user_view s.user %}">{{ s.user|full_name }}</a></p>
-				<p class="text-small text-muted">{{ s.date_added }}</p>
+				<p>by <a href="{% url user_view s.user %}">{{ s.user|full_name }}</a> on <span class="date text-muted">{{ s.date_added }}</span></p>
 				<!-- <p>in <a href="#">ANECDOTE</a></p> -->
 			</div>
 		</div>
