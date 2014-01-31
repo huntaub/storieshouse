@@ -33,7 +33,7 @@ function createGraph(elem, data, bids) {
 				data: bids,
 			}]
 		});
-	var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+	// var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
 
 	// var y_axis = new Rickshaw.Graph.Axis.Y( {
 	//  graph: graph,
