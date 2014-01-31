@@ -73,13 +73,13 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Author</div>
 						<div class="panel-body">
-							<button class="btn btn-link btn-block">Edit this Story</button>
+							<a href="{% url story_edit story.id %}" class="btn btn-link btn-block">Edit this Story</a>
 							{% if story.published %}
-								<button class="btn btn-warning btn-block">Unpublish</button>
+								<!-- <button class="btn btn-warning btn-block">Unpublish</button> -->
 							{% else %}
-								<button class="btn btn-warning btn-block">Publish</button>
+								<!-- <button class="btn btn-warning btn-block">Publish</button> -->
 							{% endif %}
-							<button class="btn btn-danger btn-block">Delete Story</button>
+							<a href="javascript:alert('Feature not yet implemented.');" class="btn btn-danger btn-block">Delete Story</a>
 						</div>
 					</div>
 				{% endif %}
