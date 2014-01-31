@@ -3,18 +3,71 @@
 {% block title_bar %}: Write{% endblock %}
 {% block articles_active %}active{% endblock %}
 
-{% block admin_title %}New Story{% endblock %}
+{% block admin_title %}{% if create %}New Story{% else %}{{ story.title }}{% endif %}{% endblock %}
+
+{% block admin_js %}
+{{ form.media }}
+{% endblock %}
 
 {% block admin_content %}
-<div class="span8">
 <br/>
-<form action="{{ request.path }}" method="POST">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<div class="form-actions">
-		<input type="submit" value="Save" class="btn btn-primary"/>
+
+<ul class="nav nav-tabs">
+	{% if not create %}<li class="active"><a href="#info" data-toggle="tab">Information</a></li>{% endif %}
+	<li class="{% if create %}active{% endif %}"><a href="#edit" data-toggle="tab">Editor</a></li>
+	<li><a href="#preview" data-toggle="tab">Preview</a></li>
+</ul>
+
+<br/>
+
+<div class="tab-content">
+	<div class="tab-pane fade in active" id="info">
+		<p>Story Added: {{ story.date_added }}</p>
+		<p>Story Hits: {{ story.hits }}</p>
+		<p><a href="{% url story_view story.user.username story.slug %}" class="btn btn-sm btn-primary">View On Site</a></p>
+		<p><a href="{% url story_view story.user.username story.slug %}" class="btn btn-sm btn-danger">Delete Story</a></p>
 	</div>
-</form>
-<p>Remember that your body can include <a href="http://daringfireball.net/projects/markdown/basics">Markdown</a> syntax.</p>
+	<div class="tab-pane fade {% if create %}in active{% endif %}" id="edit">
+		<form action="{{ request.path }}" method="POST" role="form">
+			{% csrf_token %}
+			<div class="form-group">
+				{{ form.title.errors }}
+				<label for="id_title">Title:</label>
+				{{ form.title }}
+			</div>
+			<div class="form-group">
+				{{ form.body.errors }}
+				<label for="id_body">Body:</label>
+				{{ form.body }}
+			</div>
+			<div class="form-group">
+				{{ form.icon.errors }}
+				<label for="id_icon">Icon:</label>
+				{{ form.icon }}
+			</div>
+			<div class="form-group">
+				{{ form.image.errors }}
+				<label for="id_image">Image:</label>
+				{{ form.image }}
+			</div>
+			<div class="form-group">
+				{{ form.category.errors }}
+				<label for="id_category">Category:</label>
+				{{ form.category }}
+			</div>
+			<div class="form-group">
+				{{ form.published.errors }}
+				<label for="id_published">Published:</label>
+				{{ form.published }}
+			</div>
+			<div class="form-actions">
+				<input type="submit" value="Save" class="btn btn-primary"/>
+			</div>
+		</form>
+		<p>Remember that your body can include <a href="http://daringfireball.net/projects/markdown/basics">Markdown</a> syntax.</p>
+		</div>
+	</div>
+	<div class="tab-pane fade" id="preview">
+	</div>
 </div>
 {% endblock %}

@@ -10,8 +10,8 @@ from django.core.urlresolvers import reverse
 from datetime import datetime, timedelta
 
 class StoryForm(forms.ModelForm):
-    title = forms.CharField(widget = TextInput(attrs = {'style': 'width: 500px'}))
-    body = forms.CharField(widget = Textarea(attrs = {'style': 'width: 500px'}))
+    title = forms.CharField(widget = TextInput())
+    body = forms.CharField(widget = Textarea())
     class Meta:
         model = Story
         exclude = ('user', 'date_added', 'slug', 'viewcount')

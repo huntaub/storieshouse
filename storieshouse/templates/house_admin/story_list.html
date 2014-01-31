@@ -14,7 +14,7 @@
 	<thead>
 	<tr>
 		<th>Title</th>
-		<th>Posted</th>
+		<th class="hidden-xs">Posted</th>
 		<th>Published</th>
 		<th>Views</th>
 	</tr>
@@ -23,7 +23,7 @@
 	{% for x in stories %}
 	<tr>
 		<td><a href="{% url story_edit x.id %}">{{ x.title }}</a></td>
-		<td>{{ x.date_added }}</td>
+		<td class="hidden-xs">{{ x.date_added }}</td>
 		<td>{% if x.published %}<i class="fa fa-check"></i>{% endif %}</td>
 		<td>{{ x.hits }}</td>
 	</tr>
