@@ -55,7 +55,7 @@ function createGraph(elem, data, bids) {
 					n += 7;
 				return weekday[n];
 			} else if (x == 0) {
-				return "Today;"
+				return "Today";
 			}
 		},
 		yFormatter: function(y) { return y; }

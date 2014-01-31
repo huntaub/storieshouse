@@ -19,7 +19,7 @@
 				Total Views
 			</div>
 			<div class="panel-body text-center stat">
-				<span>100,000</span>
+				<span>{{ total_views }}</span>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -27,7 +27,7 @@
 				Total Stories
 			</div>
 			<div class="panel-body text-center stat">
-				<span>450</span>
+				<span>{{ total_stories }}</span>
 			</div>
 		</div>
 	</div>
@@ -51,11 +51,9 @@
 			</div>
 			<div class="panel-body stat">
 				<ol>
-					<li><a href="#">Football Calculus Part 5</a> <span class="text-muted">(650 views)</span></li>
-					<li><a href="#">I Once Ate a Cheeseburger</a> <span class="text-muted">(650 views)</span></li>
-					<li><a href="#">This is a Shitty Life</a> <span class="text-muted">(650 views)</span></li>
-					<li><a href="#">Why do I do free webdesign work?</a> <span class="text-muted">(650 views)</span></li>
-					<li><a href="#">Why do I have friends?</a> <span class="text-muted">(650 views)</span></li>
+					{% for x in top_stories %}
+					<li><a href="{% url story_view x.user.username x.slug %}">{{ x.title }}</a> <span class="text-muted">({{ x.hits_this_week }} views)</span></li>
+					{% endfor %}
 				</ol>
 			</div>
 		</div>
@@ -69,24 +67,9 @@
 <script>
 createGraph("#graph-views", 
 	[ 
-		{ x: -7, y: 50 }, 
-		{ x: -6, y: 30 }, 
-		{ x: -5, y: 30 }, 
-		{ x: -4, y: 30 }, 
-		{ x: -3, y: 30 }, 
-		{ x: -2, y: 30 }, 
-		{ x: -1, y: 32 },
-		{ x: 0, y: 32 }
-	],
-	[
-		{ x: -7, y: 15 }, 
-		{ x: -6, y: 5 }, 
-		{ x: -5, y: 10 }, 
-		{ x: -4, y: 20 }, 
-		{ x: -3, y: 0 }, 
-		{ x: -2, y: 7 }, 
-		{ x: -1, y: 12 },
-		{ x: 0, y: 0 }
-	]);
+		{% for x in views %}
+		{ x: -{{ forloop.counter0 }}, y: {{ x.count }} },
+		{% endfor %}
+	], [{x: -6, y:0},]);
 </script> 
 {% endblock %}

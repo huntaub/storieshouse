@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
 from django.db.models import Count
+from datetime import datetime, timedelta
 
 class Collection(models.Model):
 	name = models.CharField(max_length = 255)
@@ -96,6 +97,10 @@ class Story(models.Model):
 	def hits(self):
 		return self.hit_set.count() + self.viewcount
 
+	def hits_this_week(self):
+		lastweek = datetime.now() - timedelta(weeks=1)
+		return Hit.objects.filter(date__gt=lastweek, story=self).count()
+
 	def register_hit(self):
 		h = Hit()
 		h.story_id = self.id
@@ -105,6 +110,11 @@ class Story(models.Model):
 
 	def __unicode__(self):
 		return '%s by %s' % (self.title, self.user)
+
+	@staticmethod
+	def top_by_author(limit, author, early_date):
+		h = Hit.objects.filter(date__gt=early_date, author=author).values('story').annotate(the_count=Count('story')).order_by('-the_count')[:limit]
+		return map(lambda x: Story.objects.get(id=x["story"]), h)
 
 	@staticmethod
 	def top(limit, early_date):
