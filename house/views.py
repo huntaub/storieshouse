@@ -69,32 +69,6 @@ class StoryList(ListView):
     def get_queryset(self):
         return Story.objects.filter(published=True)
 
-class StoryCreate(CreateView):
-    model = Story
-    form_class = StoryForm
-    template_name = "house_admin/story_form.html"
-
-    def form_valid(self, form):
-        s = Story()
-        s.title = form.cleaned_data['title']
-        s.body = form.cleaned_data['body']
-        s.published = form.cleaned_data['published']
-        s.icon = form.cleaned_data['icon']
-        s.category = form.cleaned_data['category']
-        s.viewcount = 0
-        s.user = self.request.user
-        s.save()
-        return HttpResponseRedirect(reverse('story_view', kwargs={'slug':s.slug, 'user':s.user}))
-
-class StoryUpdate(UpdateView):
-    model = Story
-    form_class = StoryForm
-    success_url = '/'
-    template_name = 'house_admin/story_form.html'
-
-    def get_success_url(self):
-        return reverse('story_view', kwargs={'slug':self.object.slug, 'user':self.object.user}) 
-
 class StoryDelete(DeleteView):
     model = Story
     success_url = '/story/'

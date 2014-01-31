@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from house.models import *
+from house.views import StoryForm
 from datetime import datetime, timedelta
 
 class AccountDashboard(TemplateView):
@@ -23,3 +24,31 @@ class AccountStories(TemplateView):
         context = super(AccountStories, self).get_context_data(**kwargs)
         context['stories'] = Story.objects.filter(user=self.request.user).order_by("-date_added")
         return context
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+class StoryCreate(CreateView):
+    model = Story
+    form_class = StoryForm
+    template_name = "house_admin/story_form.html"
+
+    def form_valid(self, form):
+        s = Story()
+        s.title = form.cleaned_data['title']
+        s.body = form.cleaned_data['body']
+        s.published = form.cleaned_data['published']
+        s.icon = form.cleaned_data['icon']
+        s.category = form.cleaned_data['category']
+        s.viewcount = 0
+        s.user = self.request.user
+        s.save()
+        return HttpResponseRedirect(reverse('story_view', kwargs={'slug':s.slug, 'user':s.user}))
+
+class StoryUpdate(UpdateView):
+    model = Story
+    form_class = StoryForm
+    success_url = '/'
+    template_name = 'house_admin/story_form.html'
+
+    def get_success_url(self):
+        return reverse('story_view', kwargs={'slug':self.object.slug, 'user':self.object.user}) 
