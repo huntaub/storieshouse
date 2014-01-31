@@ -1,38 +1,14 @@
 # Create your views here.
-from django import forms
 from house.models import *
 from podcast.models import *
 from django.views.generic.detail import DetailView
 from django.views.generic import TemplateView
-from django.forms.widgets import *
 from django.db.models import Q
-from django.core.urlresolvers import reverse
 from datetime import datetime, timedelta
-
-class StoryForm(forms.ModelForm):
-    title = forms.CharField(widget = TextInput(attrs = {'class': 'form-control'}))
-    body = forms.CharField(widget = Textarea(attrs = {'class': 'form-control'}))
-    class Meta:
-        model = Story
-        exclude = ('user', 'date_added', 'slug', 'viewcount')
-        widgets = {
-            'icon': Select(attrs = {'class': 'form-control'}),
-            'image': TextInput(attrs = {'class': 'form-control', 'placeholder': 'Use icon for story.'}),
-            'category': Select(attrs = {'class': 'form-control'}),
-            # 'published': CheckboxInput(attrs = {'class': 'form-control'}),
-        }
-
-class StoryAuthorForm(forms.ModelForm):
-    about = forms.CharField(widget = Textarea(attrs = {'class': 'form-control'}))
-    avatar = forms.CharField(widget = TextInput(attrs = {'class': 'form-control'}))
-    class Meta:
-        model = StoryAuthor
-        exclude = ('user')
 
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
-from django.http import HttpResponseRedirect
 
 class HomePage(TemplateView):
     template_name = 'base.html'
@@ -50,12 +26,6 @@ class HomePage(TemplateView):
 class StoryView(DetailView):
     model = Story
     template_name = 'house/story_detail.html'
-
-    # def get_template_names(self):
-    #     if not self.object.image:
-    #         return 'house/story_old.html'
-    #     else:
-    #         return 'house/story_detail.html'
 
     def get_object(self):
         user = User.objects.get(username=self.kwargs['user'])
@@ -76,10 +46,6 @@ class StoryList(ListView):
     def get_queryset(self):
         return Story.objects.filter(published=True)
 
-class StoryDelete(DeleteView):
-    model = Story
-    success_url = '/story/'
-
 class UserStoryView(DetailView):
     model = User
 
@@ -92,15 +58,6 @@ class UserStoryView(DetailView):
     def get_object(self):
         self.object = User.objects.get(username=self.kwargs['pk'])
         return self.object
-
-class AuthorUpdate(UpdateView):
-    model = StoryAuthor
-    form_class = StoryAuthorForm
-    success_url = "/"
-    template_name = "house_admin/storyauthor_form.html"
-
-    def get_object(self):
-        return StoryAuthor.find(self.request.user)
 
 class CategoryView(DetailView):
     model = Category
