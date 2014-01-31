@@ -90,6 +90,7 @@ class StoryUpdate(UpdateView):
     model = Story
     form_class = StoryForm
     success_url = '/'
+    template_name = 'house_admin/story_form.html'
 
     def get_success_url(self):
         return reverse('story_view', kwargs={'slug':self.object.slug, 'user':self.object.user}) 
