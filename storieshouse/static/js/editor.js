@@ -22,4 +22,15 @@ $(document).ready(function() {
 			last_icon = new_icon;
 		}
 	});
+	if($("#id_image").val() != "") {
+		$(".i-preview i").hide();
+		$(".i-preview img").show();
+		$(".i-preview img").attr("src", $("#id_image").val());
+	} else {
+		$(".i-preview img").hide();
+		$(".i-preview i").show();
+		var new_icon = ("fa-" + $("#id_icon").val());
+		$(".i-preview i").addClass(new_icon);
+		last_icon = new_icon;
+	}
 });
