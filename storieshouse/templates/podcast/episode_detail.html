@@ -11,6 +11,8 @@
 		<div class="col-md-8 col-md-offset-2">
 			<h1><span class="accent">{{ object.number }}</span> {{ object.name }}</h1>
 			<h4 class="muted">published {{ object.data_published }} for <a href="{% url view_podcast object.podcast.slug %}">{{ object.podcast.name }}</a></h4>
+			<a href="itpc://www.storieshouse.com/{% url view_podcast_rss object.podcast.slug %}" class="btn btn-sm btn-primary"><i class="fa fa-music"></i> Subscribe on iTunes</a>
+			<a href="{% url view_podcast_rss object.podcast.slug %}" class="btn btn-sm btn-warning"><i class="fa fa-rss"></i> Subscribe with RSS</a>
 			<hr/>
 			<div class="player">
 				<div id="jquery_jplayer_1" class="jp-jplayer"></div>
