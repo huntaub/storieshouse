@@ -14,14 +14,14 @@
 			<p class="muted" style="font-size: 12px;">{{ object.schedule }}</p>
 			<p>{{ object.description }}</p>
 
-			<!-- <div class="row"> -->
-				<!-- <div class="col-xs-6"> -->
-					<!-- <a href="#" class="btn btn-block btn-primary btn-sm"><i class="fa fa-music"></i> iTunes</a> -->
-				<!-- </div> -->
-				<!-- <div class="col-xs-6"> -->
-					<a href="{% url view_podcast_rss object.slug %}" class="btn btn-block btn-warning btn-sm"><i class="fa fa-rss"></i> Subscribe to RSS</a>
-				<!-- </div> -->
-			<!-- </div> -->
+			<div class="row">
+				<div class="col-xs-6">
+					<a href="itpc://{% url view_podcast_rss object.slug %}" class="btn btn-block btn-primary btn-sm"><i class="fa fa-music"></i> iTunes</a>
+				</div>
+				<div class="col-xs-6">
+					<a href="{% url view_podcast_rss object.slug %}" class="btn btn-block btn-warning btn-sm"><i class="fa fa-rss"></i> RSS</a>
+				</div>
+			</div>
 
 			<br/>
 		</div>
