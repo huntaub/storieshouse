@@ -1,4 +1,5 @@
 from django.db import models
+import requests
 
 # Create your models here.
 class Podcast(models.Model):
@@ -24,3 +25,9 @@ class Episode(models.Model):
 
 	def __unicode__(self):
 		return u'%s %i: %s' % (self.podcast.name, self.number, self.name)
+
+	def length(self):
+		return requests.head(self.audio).headers.get("content-length")
+
+	def mime(self):
+		return requests.head(self.audio).headers.get("content-type")
