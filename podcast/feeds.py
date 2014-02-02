@@ -10,7 +10,7 @@ from podcast.models import *
 class iTunesPodcastsFeedGenerator(Rss201rev2Feed):
 
     def rss_attributes(self):
-        return {u"version": self._version, u'xmlns:itunes': u'http://www.itunes.com/dtds/podcast-1.0.dtd'}
+        return {u"version": self._version, u"xmlns:atom": u"http://www.w3.org/2005/Atom", u'xmlns:itunes': u'http://www.itunes.com/dtds/podcast-1.0.dtd'}
 
     def add_root_elements(self, handler):
         super(iTunesPodcastsFeedGenerator, self).add_root_elements(handler)
