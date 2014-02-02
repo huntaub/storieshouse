@@ -10,7 +10,7 @@ from podcast.models import *
 class iTunesPodcastsFeedGenerator(Rss201rev2Feed):
 
     def rss_attributes(self):
-        return {u"version": self._version, u"xmlns:atom": u"http://www.w3.org/2005/Atom", u'xmlns:itunes': u'http://www.itunes.com/dtds/podcast-1.0.dtd'}
+        return {u"version": self._version, u'xmlns:itunes': u'http://www.itunes.com/dtds/podcast-1.0.dtd'}
 
     def add_root_elements(self, handler):
         super(iTunesPodcastsFeedGenerator, self).add_root_elements(handler)
@@ -26,9 +26,9 @@ class iTunesPodcastsFeedGenerator(Rss201rev2Feed):
 
     def add_item_elements(self,  handler, item):
         super(iTunesPodcastsFeedGenerator, self).add_item_elements(handler, item)
-        handler.addQuickElement(u'iTunes:summary',item['summary'])
-        handler.addQuickElement(u'iTunes:duration',item['duration'])
-        handler.addQuickElement(u'iTunes:explicit',item['explicit'])
+        handler.addQuickElement(u'itunes:summary',item['summary'])
+        handler.addQuickElement(u'itunes:duration',item['duration'])
+        handler.addQuickElement(u'itunes:explicit',item['explicit'])
 
 class iTunesPodcastPost():
     def __init__(self, podcast):
